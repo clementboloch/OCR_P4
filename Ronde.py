@@ -21,6 +21,9 @@ class Ronde:
             self.name = name
         self.start = now()
         self.matchs = []
+
+    def __str__(self):
+        return self.name
     
     def add_match(self, match: Match):
         self.matchs.append(match.get_match())
@@ -30,14 +33,14 @@ class Ronde:
         self.end = now()
 
 '''
-- Faire en sorte que le compteur de ROund pour le nommage dépende du tournoi (si tournoi 1 à 3 rounds, recommencer le tournoi 2 avec le nom Round1 et non Round4)
+- Faire en sorte que le compteur de Round pour le nommage dépende du tournoi (si tournoi 1 a 3 rounds, recommencer le tournoi 2 avec le nom Round1 et non Round4)
 '''
 
-if __name__ == '__main__':
-    Ronde1 = Ronde(1)
-    Ronde1.end_round()
-    Ronde2 = Ronde(4)
-    match1 = Match(1,0,2,1)
-    Ronde2.add_match(match1)
-    print(Ronde1.__dict__)
-    print(Ronde2.__dict__)
+# if __name__ == '__main__':
+#     Ronde1 = Ronde(1)
+#     Ronde1.end_round()
+#     Ronde2 = Ronde(4)
+#     match1 = Match({1,0},1)
+#     Ronde2.add_match(match1)
+#     print(Ronde1.__dict__)
+#     print(Ronde2.__dict__)

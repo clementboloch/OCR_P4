@@ -1,42 +1,62 @@
 from datetime import date
+from faker import Faker
 
+from util import input_date
 from Ronde import Ronde
+from Joueur import Joueur
+import project_const as const
+
+f = Faker(locale = "fr_FR")
 
 today = date.today()
 no_date = date(1, 1, 1)
 
 class Tournoi:
-    def __init__(self, name: str, location: str = 'non renseignée', start_date: date = today, end_date: date = today, nb_round: int = 4, rounds: list = [], players: list = [], time_control: str = 'non renseigné', description: str = 'non renseignée'):
-        self.name = name
-        self.location = location
-        self.start_date = start_date
-        self.end_date = end_date
-        self.nb_round = nb_round # pourquoi def à 4 de base, vu qu'on en ajoute au fur et à mesure, pourquoi pas regarder taille de liste ?
-        self.rounds = rounds
-        self.players = players
-        self.time_control = time_control
-        self.description = description
+    created = []
 
-    def modif_date(self, start_date: date, end_date: date = no_date):
-        self.start_date = start_date
-        self.end_date = end_date
-        return "message de confirmation"
+    scenario = {
+        'tournament_name': [{'type': input, 'text': "\n\nVeuillez saisir le nom de l'événement : \n"}],
+        'tournament_location': [{'type': input, 'text': "\n\nlocalisation : \n"}],
+        'tournament_start_date': [{'type': input_date, 'text': "\n\nstart date : \n"}],
+        'tournament_end_date': [{'type': input_date, 'text': "\n\nend date : \n"}],
+        'tournament_nb_round': [{'type': input, 'text': "\n\nnb round : \n"}],
+        'tournament_rounds': [{'type': input, 'text': "\n\nround : \n"}],
+        'tournament_players': [{'type': input, 'text': "\n\nplayers : \n"}],
+        'tournament_time_control': [{'type': input, 'text': "\n\ntime control : \n", 'answers': ['bullet', 'blitz', 'coup rapide']}],
+        'tournament_description': [{'type': input, 'text': "\n\ndescription : \n"}],
+    }
+    
+    step = ['tournament_name', 'tournament_location', 'tournament_time_control', 'tournament_description']
+    
+    def __init__(self, tournament_name: str = f.word(), tournament_location: str = f.address(), tournament_start_date: date = today, tournament_end_date: date = today, tournament_nb_round: int = const.nb_round, tournament_rounds: list[Ronde] = [], tournament_players: list[Joueur] = [], tournament_time_control: str = 'non renseigné', tournament_description: str = 'non renseignée'):
+        self.tournament_name = tournament_name
+        self.tournament_location = tournament_location
+        self.tournament_start_date = tournament_start_date
+        self.tournament_end_date = tournament_end_date
+        self.tournament_nb_round = tournament_nb_round
+        self.tournament_rounds = tournament_rounds
+        self.tournament_players = tournament_players
+        self.tournament_time_control = tournament_time_control
+        self.tournament_description = tournament_description
+        Tournoi.created.append(self)
+
+    def __str__(self):
+        return f"{self.tournament_name}, le {self.tournament_start_date}"
     
     def add_round(self, round: Ronde):
-        self.rounds.append(round)
-        # self.nb_round += 1
+        self.tournament_rounds.append(round)
         return self
     
-    def add_player(self, player_index):
-        if player_index not in self.players:
-            self.players.append(player_index)
-            return "message de confirmation"
+    def add_player(self, player: Joueur):
+        if player in self.tournament_players:
+            return False
         else:
-            return "Le joueur est déjà inscrit au tournoi"
+            self.tournament_players.append(player)
+            return True
 
-    def del_player(self, player_index):
-        if player_index in self.players:
-            self.players.remove(player_index)
+    def del_player(self, player: Joueur):
+        if player in self.tournament_players:
+            self.tournament_players.remove(player)
             return "message de confirmation"
         else:
             return "Le joueur n'était pas inscrit au tournoi"
@@ -53,8 +73,9 @@ class Tournoi:
 
 if __name__ == '__main__':
     Tournoi1 = Tournoi('tournoi1')
-    print(Tournoi1.__dict__)
-
+    # print(type(Tournoi1.tournament_rounds))
+    # print(Tournoi1.__dict__)
+    print(f.word())
 
 '''
 préciser dans la console que la date est définie automatiquement à la date du jour
