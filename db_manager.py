@@ -18,7 +18,7 @@ def import_all_data(table_name: str, Object: object):
     
     created = []
     for object in objects:
-        created.append(Object(object))
+        created.append(Object(**object))
     return created
 
 def serialize_object(object: object):
