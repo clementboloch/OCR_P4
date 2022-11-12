@@ -208,10 +208,7 @@ while True:
                     print(f"      {index + 1} - {match}")
     
     elif answer == 9:
-        # save_all_data('players_table', serialize(Joueur.created))
-        # save_all_data('tournaments_table', serialize(Tournoi.created))
-        print('Sauvegardé !')
-        print('Au revoir')
+        print('Au revoir !')
         break
 
 
