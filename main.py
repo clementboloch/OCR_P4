@@ -67,7 +67,7 @@ def ask(obj: object, param: str):
 
 def ask_score(Round: Ronde, pairs: list[list[Joueur]]):
     for pair in pairs:
-        score = float(input('score du joueur ' + str(pair[0]) + ' : '))
+        score = float(input('score de ' + str(pair[0]) + ' : '))
         pair[0]._player_score += score
         pair[1]._player_score += 1 - score
         match = Match(pair, score)
@@ -86,8 +86,12 @@ def create_instance(obj):
     return Instance
 
 def new_tournament():
+    potential_players = import_all_data('players_table', Joueur)
+    nb_potential_players = len(potential_players)
+    if nb_potential_players < const.nb_player:
+        print(f"Il faut un minmum de {const.nb_player} joueurs pour créer le tournoi. \nMerci de bien vouloir ajouter au moins {const.nb_player - nb_potential_players} joueurs.")
+        return False
     Tournament = create_instance(Tournoi)
-    potential_players = Joueur.created.copy()
     print(f"Ajouter les {const.nb_player} joueurs pour ce tournoi")
     for _ in range(const.nb_player):
         print("Joueurs disponibles :")
@@ -141,8 +145,9 @@ while True:
 
     if answer == 1:
         NewTournament = new_tournament()
-        serializedNewTournament = serialize_object(NewTournament)
-        save_data('players_table', serializedNewTournament)
+        if NewTournament:
+            serializedNewTournament = serialize_object(NewTournament)
+            save_data('players_table', serializedNewTournament)
 
     elif answer == 2:
         NewPlayer = create_instance(Joueur)
