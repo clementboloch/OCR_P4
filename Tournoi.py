@@ -38,7 +38,6 @@ class Tournoi:
         self.tournament_players = tournament_players
         self.tournament_time_control = tournament_time_control
         self.tournament_description = tournament_description
-        Tournoi.created.append(self)
 
     def __str__(self):
         return f"{self.tournament_name}, le {self.tournament_start_date}"

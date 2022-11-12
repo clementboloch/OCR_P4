@@ -33,7 +33,6 @@ class Joueur:
         self.player_gender = player_gender
         self.player_ranking = player_ranking
         self._player_score = _player_score
-        Joueur.created.append(self)
     
     def __repr__(self):
         return str(self.player_firstname)

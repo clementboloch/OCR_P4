@@ -7,7 +7,7 @@ from Match import Match
 from Joueur import Joueur
 from datetime import date
 from algo_suisse import suisse_first, suisse_then, sort
-from db_manager import import_all_data, save_all_data, serialize
+from db_manager import import_all_data, save_data, serialize_object
 import project_const as const
 
 def ask_date(obj: object, param: str):
@@ -121,15 +121,9 @@ def new_tournament():
         new_rank = input(f"Nouveau classement du joueur {player} : ")
         player.player_ranking = int(new_rank)
     
+    return Tournament
+    
 
-import_all_data('players_table', Joueur)
-import_all_data('tournaments_table', Tournoi)
-
-print(Joueur.created)
-# import fake data
-import fake_data
-
-print(Joueur.created)
 
 menu = '''\nQue voulez vous faire ? \n
     1 - Créer un tournoi\n
@@ -146,13 +140,17 @@ while True:
     answer = validate_int(menu, 1, 9)
 
     if answer == 1:
-        new_tournament()
+        NewTournament = new_tournament()
+        serializedNewTournament = serialize_object(NewTournament)
+        save_data('players_table', serializedNewTournament)
 
     elif answer == 2:
-        create_instance(Joueur)
+        NewPlayer = create_instance(Joueur)
+        serializedNewPlayer = serialize_object(NewPlayer)
+        save_data('players_table', serializedNewPlayer)
     
     elif answer == 3:
-        players = Joueur.created
+        players = import_all_data('players_table', Joueur)
         print("De quel joueur voulez-vous changer le classement ?")
         for index, player in enumerate(players):
             print(f"{index + 1} - {player}")
@@ -163,8 +161,8 @@ while True:
         print(player.player_ranking)
     
     elif answer == 4:
-        players = Joueur.created
-        sort = validate_int("1 - Par classement \n2 - Par ordre alphabétique", 1, 2)
+        players = import_all_data('players_table', Joueur)
+        sort = validate_int("1 - Par classement \n2 - Par ordre alphabétique\n", 1, 2)
         if sort == 1:
             sorted_players = sorted(players, key=attrgetter('player_ranking', 'player_lastname', 'player_firstname'))
         else:
@@ -174,12 +172,13 @@ while True:
             print(f"{index + 1} - {player}")
     
     elif answer == 5:
-        for index, tournament in enumerate(Tournoi.created):
+        tournaments = import_all_data('tournaments_table', Tournoi)
+        for index, tournament in enumerate(tournaments):
             print(f"{index + 1} - {tournament}")
 
     elif answer in [6, 7, 8]:
         search_key = {6: 'joueurs', 7: 'tours', 8: 'match'}
-        tournaments = Tournoi.created
+        tournaments = import_all_data('tournaments_table', Tournoi)
         print(f"De quel tournoi voulez-vous lister les {search_key[answer]} ?")
         for index, tournament in enumerate(tournaments):
             print(f"{index + 1} - {tournament}")
@@ -204,8 +203,8 @@ while True:
                     print(f"      {index + 1} - {match}")
     
     elif answer == 9:
-        save_all_data('players_table', serialize(Joueur.created))
-        save_all_data('tournaments_table', serialize(Tournoi.created))
+        # save_all_data('players_table', serialize(Joueur.created))
+        # save_all_data('tournaments_table', serialize(Tournoi.created))
         print('Sauvegardé !')
         print('Au revoir')
         break
