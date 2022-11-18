@@ -138,7 +138,7 @@ menu = '''\nQue voulez vous faire ? \n
     6 - Liste des joueurs d'un tournoi\n
     7 - Liste des tours d'un tournoi\n
     8 - Liste des matchs d'un tournoi\n
-    9 - Sauvegarder et quitter le porgramme\n'''
+    9 - Quitter le porgramme\n'''
     
 while True:
     answer = validate_int(menu, 1, 9)
