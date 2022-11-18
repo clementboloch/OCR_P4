@@ -1,8 +1,7 @@
 from datetime import date
 from faker import Faker
 
-from db_manager import serialize_object
-from util import input_date
+from util import input_date, serialize_object
 from Ronde import Ronde
 from Joueur import Joueur
 import project_const as const
