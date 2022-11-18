@@ -96,13 +96,13 @@ def new_tournament():
     for _ in range(const.nb_player):
         print("Joueurs disponibles :")
         for index, player_id in enumerate(potential_players_id):
-            player = import_data_from_id('players_table', player_id)
+            player = import_data_from_id('players_table', Joueur, player_id)
             print(f"{index + 1} - {player}")
         index = validate_int('num joueur : ', 1, len(potential_players_id))
         id = potential_players_id.pop(index - 1)
         Tournament.add_player(id)
 
-        playerAdded = import_data_from_id('players_table', id)
+        playerAdded = import_data_from_id('players_table', Joueur, id)
         if playerAdded.player_gender == 'F':
             print(f'{playerAdded} a bien été ajoutée au tournoi \n')
         else:
@@ -110,13 +110,14 @@ def new_tournament():
     print(Tournament.__dict__)
 
     players_id = Tournament.tournament_players
-    players = [import_data_from_id('players_table', player_id) for player_id in players_id]
+    players = [import_data_from_id('players_table', Joueur, player_id) for player_id in players_id]
     pairs, played_pairs = suisse_first(players)
     print('Voilà les paires : ', pairs)
     
     for i in range(Tournament.tournament_nb_round - 1):
         Round = Ronde(i + 1)
         ask_score(Round, pairs)
+        Round.end_round()
         Tournament.add_round(Round)
         pairs, played_pairs = suisse_then(players, played_pairs)
         print('Voilà les paires : ', pairs)
@@ -129,7 +130,7 @@ def new_tournament():
 
     # Mise à jour des classements
     for player_id in Tournament.tournament_players:
-        player = import_data_from_id('players_table', player_id)
+        player = import_data_from_id('players_table', Joueur, player_id)
         new_rank = input(f"Nouveau classement du joueur {player} : ")
         update_data('players_table', player_id, {'player_ranking': int(new_rank)})
     
@@ -182,7 +183,7 @@ while True:
             sorted_players = sorted(players, key=attrgetter('player_lastname', 'player_firstname', 'player_ranking'))
         
         for index, player in enumerate(sorted_players):
-            print(f"{index + 1} - {player} (ranking: {player.player_ranking})")
+            print(f"{index + 1} - {player} (classement : {player.player_ranking})")
     
     elif answer == 5:
         tournaments = import_all_data('tournaments_table', Tournoi)
@@ -201,20 +202,21 @@ while True:
         if answer == 6:
             sort = validate_int("1 - Par classement \n2 - Par ordre alphabétique \n", 1, 2)
             # TODO : méthode d'instance de Tournoi : lister ses joueurs
-            players = [import_data_from_id('players_table', player_id) for player_id in tournament.tournament_players]
+            players = [import_data_from_id('players_table', Joueur, player_id) for player_id in tournament.tournament_players]
             if sort == 1:
                 sorted_players = sorted(players, key=attrgetter('player_ranking', 'player_lastname', 'player_firstname'))
             else:
                 sorted_players = sorted(players, key=attrgetter('player_lastname', 'player_firstname', 'player_ranking'))            
             for index, player in enumerate(sorted_players):
-                print(f"{index + 1} - {player} (ranking: {player.player_ranking})")
+                print(f"{index + 1} - {player} (classement : {player.player_ranking})")
         elif answer == 7:
             for index, round in enumerate(tournament.tournament_rounds):
-                print(f"{index + 1} - {round.matchs}")
+                print(f"{index + 1} - {round['name']}")
         else:
             for index, round in enumerate(tournament.tournament_rounds):
-                print(f"{index + 1} - {round}")
-                for index, match in enumerate(round.matchs):
+                Round = Ronde(**round)
+                print(f"{index + 1} - {Round}")
+                for index, match in enumerate(Round.matchs):
                     print(f"      {index + 1} - {match}")
     
     elif answer == 9:
