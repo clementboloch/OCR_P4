@@ -191,7 +191,7 @@ while True:
         tournament = tournaments[index - 1]
         print(f"Liste des {search_key[answer]} du tournoi {tournament.tournament_name}")
         if answer == 6:
-            sort = validate_int("1 - Par classement \n2 - Par ordre alphabétique", 1, 2)
+            sort = validate_int("1 - Par classement \n2 - Par ordre alphabétique \n", 1, 2)
             if sort == 1:
                 sorted_players = sorted(tournament.tournament_players, key=attrgetter('player_ranking', 'player_lastname', 'player_firstname'))
             else:
