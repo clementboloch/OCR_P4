@@ -12,7 +12,6 @@ import project_const as const
 
 PlayersTable = Table('db.json', 'players_table')
 TournamentTable = Table('db.json', 'tournaments_table')
-
                 
 tournament_step = ['tournament_name', 'tournament_location', 'tournament_start_date', 'tournament_end_date', 'tournament_nb_round', 'tournament_rounds', 'tournament_players', 'tournament_time_control', 'tournament_description']
 player_step = ['player_firstname', 'player_lastname', 'player_birthday', 'player_gender', 'player_ranking']
