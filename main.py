@@ -7,7 +7,7 @@ from Match import Match
 from Joueur import Joueur
 from datetime import date
 from algo_suisse import suisse_first, suisse_then, sort
-from db_manager import import_all_data, save_data, serialize_object, update_data
+from db_manager import import_all_data, save_data, serialize_object, update_data, ask_size, import_data_from_id
 import project_const as const
 
 def ask_date(obj: object, param: str):
@@ -86,8 +86,8 @@ def create_instance(obj):
     return Instance
 
 def new_tournament():
-    potential_players = import_all_data('players_table', Joueur)
-    nb_potential_players = len(potential_players)
+    nb_potential_players = ask_size('players_table')
+    potential_players_id = list(range(1, nb_potential_players + 1))
     if nb_potential_players < const.nb_player:
         print(f"Il faut un minmum de {const.nb_player} joueurs pour créer le tournoi. \nMerci de bien vouloir ajouter au moins {const.nb_player - nb_potential_players} joueurs.")
         return False
@@ -95,11 +95,18 @@ def new_tournament():
     print(f"Ajouter les {const.nb_player} joueurs pour ce tournoi")
     for _ in range(const.nb_player):
         print("Joueurs disponibles :")
-        for index, player in enumerate(potential_players):
+        for index, player_id in enumerate(potential_players_id):
+            player = import_data_from_id('players_table', player_id)
             print(f"{index + 1} - {player}")
-        index = validate_int('num joueur : ', 1, len(potential_players)) - 1
-        Tournament.add_player(potential_players.pop(index))
-        print('joueur ajouté \n')
+        index = validate_int('num joueur : ', 1, len(potential_players_id))
+        id = potential_players_id.pop(index - 1)
+        playerAdded = import_data_from_id('players_table', id)
+        Tournament.add_player(playerAdded)
+
+        if playerAdded.player_gender == 'F':
+            print(f'{playerAdded} a bien été ajoutée au tournoi \n')
+        else:
+            print(f'{playerAdded} a bien été ajouté au tournoi \n')
     print(Tournament.__dict__)
 
     # A remplacer par la suite, pour le moment gérer avec les instances, et pas avec les indices dans la base
