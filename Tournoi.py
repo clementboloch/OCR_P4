@@ -1,6 +1,7 @@
 from datetime import date
 from faker import Faker
 
+from db_manager import serialize_object
 from util import input_date
 from Ronde import Ronde
 from Joueur import Joueur
@@ -28,7 +29,7 @@ class Tournoi:
     
     step = ['tournament_name', 'tournament_location', 'tournament_time_control', 'tournament_description']
     
-    def __init__(self, tournament_name: str = f.word(), tournament_location: str = f.address(), tournament_start_date: date = today, tournament_end_date: date = today, tournament_nb_round: int = const.nb_round, tournament_rounds: list[Ronde] = [], tournament_players: list[int] = [], tournament_time_control: str = 'non renseigné', tournament_description: str = 'non renseignée'):
+    def __init__(self, tournament_name: str = f.word(), tournament_location: str = f.address(), tournament_start_date: date = today, tournament_end_date: date = today, tournament_nb_round: int = const.nb_round, tournament_rounds: list[dict] = [], tournament_players: list[int] = [], tournament_time_control: str = 'non renseigné', tournament_description: str = 'non renseignée'):
         self.tournament_name = tournament_name
         self.tournament_location = tournament_location
         self.tournament_start_date = tournament_start_date
@@ -43,7 +44,8 @@ class Tournoi:
         return f"{self.tournament_name}, le {self.tournament_start_date}"
     
     def add_round(self, round: Ronde):
-        self.tournament_rounds.append(round)
+        serializedRound = serialize_object(round)
+        self.tournament_rounds.append(serializedRound)
         return self
     
     def add_player(self, player_id: int):
