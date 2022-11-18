@@ -1,6 +1,6 @@
 from operator import attrgetter
 
-from util import input_date, serialize_object, confirmation, validate_int
+from util import input_date, serialize_object, confirmation, validate_int, ask
 from Tournoi import Tournoi
 from Ronde import Ronde
 from Match import Match
@@ -23,28 +23,6 @@ def ask_date(obj: object, param: str):
     new_date =  date(year, mounth, day)
     obj.__dict__[param] = new_date
 # to use it : ask_date(tournament, 'start_date')
-
-def ask(obj: object, param: str):
-    text = obj.scenario
-    for step in text[param]:
-        try:
-            [type, txt, answers] = step.values()
-        except:
-            [type, txt] = step.values()
-            answers = None
-        conf = 1
-        while conf:
-            if answers:
-                print(txt)
-                for i in range(len(answers)):
-                    print(f"{i+1} -  {answers[i]}")
-                inp = validate_int("", 1, len(answers))
-                inp = answers[inp - 1]
-            else:
-                inp = type(txt + 'present value: ' + str(obj.__dict__[param]) + '\n')
-            if type != print and inp != '':
-                obj.__dict__[param] = inp
-            conf = confirmation(type)
 
                 
 tournament_step = ['tournament_name', 'tournament_location', 'tournament_start_date', 'tournament_end_date', 'tournament_nb_round', 'tournament_rounds', 'tournament_players', 'tournament_time_control', 'tournament_description']

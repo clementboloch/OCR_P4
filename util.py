@@ -36,3 +36,25 @@ def validate_int(text: str, min: int, max: int):
         print(f"Ceci n'est pas un nombre entier compris entre {min} et {max}")
         answer = input(text)
     return int(answer)
+
+def ask(obj: object, param: str):
+    text = obj.scenario
+    for step in text[param]:
+        try:
+            [type, txt, answers] = step.values()
+        except:
+            [type, txt] = step.values()
+            answers = None
+        conf = 1
+        while conf:
+            if answers:
+                print(txt)
+                for i in range(len(answers)):
+                    print(f"{i+1} -  {answers[i]}")
+                inp = validate_int("", 1, len(answers))
+                inp = answers[inp - 1]
+            else:
+                inp = type(txt + 'present value: ' + str(obj.__dict__[param]) + '\n')
+            if type != print and inp != '':
+                obj.__dict__[param] = inp
+            conf = confirmation(type)
