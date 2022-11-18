@@ -31,7 +31,7 @@ class Joueur:
         self._player_score = _player_score
     
     def __repr__(self):
-        return str(self.player_firstname)
+        return str(self.player_firstname) + " " + str(self.player_lastname)
 
     def __str__(self):
         return str(self.player_firstname) + " " + str(self.player_lastname)
