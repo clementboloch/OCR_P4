@@ -69,15 +69,6 @@ def ask(obj: object, param: str):
                 obj.__dict__[param] = inp
             conf = confirmation(type)
 
-def ask_score(Round: Ronde, pairs: list[list[Joueur]]):
-    for pair in pairs:
-        score = float(input('score de ' + str(pair[0]) + ' : '))
-        pair[0]._player_score += score
-        pair[1]._player_score += 1 - score
-        match = Match(pair, score)
-        Round.add_match(match)
-
-
                 
 tournament_step = ['tournament_name', 'tournament_location', 'tournament_start_date', 'tournament_end_date', 'tournament_nb_round', 'tournament_rounds', 'tournament_players', 'tournament_time_control', 'tournament_description']
 player_step = ['player_firstname', 'player_lastname', 'player_birthday', 'player_gender', 'player_ranking']
@@ -120,7 +111,7 @@ def new_tournament():
     
     for i in range(Tournament.tournament_nb_round - 1):
         Round = Ronde(i + 1)
-        ask_score(Round, pairs)
+        Round.ask_score(pairs)
         Round.end_round()
         Tournament.add_round(Round)
         pairs, played_pairs = suisse_then(players, played_pairs)

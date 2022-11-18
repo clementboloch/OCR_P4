@@ -1,6 +1,7 @@
 from datetime import datetime
 
 from Match import Match
+from Joueur import Joueur
 
 now = lambda: datetime.now()
 
@@ -24,6 +25,14 @@ class Ronde:
 
     def end_round(self):
         self.end = now()
+
+    def ask_score(self, pairs: list[list[Joueur]]):
+        for pair in pairs:
+            score = float(input('score de ' + str(pair[0]) + ' : '))
+            pair[0]._player_score += score
+            pair[1]._player_score += 1 - score
+            match = Match(pair, score)
+            self.add_match(match)
 
 '''
 - Faire en sorte que le compteur de Round pour le nommage dépende du tournoi (si tournoi 1 a 3 rounds, recommencer le tournoi 2 avec le nom Round1 et non Round4)
