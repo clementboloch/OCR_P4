@@ -1,4 +1,9 @@
 from tinydb import TinyDB
+from Tournoi import Tournoi
+from Joueur import Joueur
+
+matchingTable = {'players_table': Joueur, 'tournaments_table': Tournoi}
+
 
 def ask_size(table_name: str):
     db = TinyDB('db.json', indent=4, default=str)
@@ -14,7 +19,9 @@ def import_data_from_id(table_name: str, id: int):
     db = TinyDB('db.json', indent=4, default=str)
     table = db.table(table_name)
     data = table.get(doc_id = id)
-    return data
+    Object = matchingTable[table_name]
+    Obj = Object(**data)
+    return Obj
 
 
 def update_data(table_name: str, id: int, updated: dict):
