@@ -200,12 +200,14 @@ while True:
         print(f"Liste des {search_key[answer]} du tournoi {tournament.tournament_name}")
         if answer == 6:
             sort = validate_int("1 - Par classement \n2 - Par ordre alphabétique \n", 1, 2)
+            # TODO : méthode d'instance de Tournoi : lister ses joueurs
+            players = [import_data_from_id('players_table', player_id) for player_id in tournament.tournament_players]
             if sort == 1:
-                sorted_players = sorted(tournament.tournament_players, key=attrgetter('player_ranking', 'player_lastname', 'player_firstname'))
+                sorted_players = sorted(players, key=attrgetter('player_ranking', 'player_lastname', 'player_firstname'))
             else:
-                sorted_players = sorted(tournament.tournament_players, key=attrgetter('player_lastname', 'player_firstname', 'player_ranking'))            
+                sorted_players = sorted(players, key=attrgetter('player_lastname', 'player_firstname', 'player_ranking'))            
             for index, player in enumerate(sorted_players):
-                print(f"{index + 1} - {player}")
+                print(f"{index + 1} - {player} (ranking: {player.player_ranking})")
         elif answer == 7:
             for index, round in enumerate(tournament.tournament_rounds):
                 print(f"{index + 1} - {round.matchs}")
