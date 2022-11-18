@@ -58,3 +58,13 @@ def ask(obj: object, param: str):
             if type != print and inp != '':
                 obj.__dict__[param] = inp
             conf = confirmation(type)
+
+def ask_date(obj: object, param: str):
+    #si que des dates demandées, ^plus besoin de mettre l'argument param, qui ne sert que pour le test sur l'instance date
+    # if isinstance(param, datetime.date):
+    day = int(input('jour'))
+    mounth = int(input('mois'))
+    year = int(input('année'))
+    new_date =  date(year, mounth, day)
+    obj.__dict__[param] = new_date
+# to use it : ask_date(tournament, 'start_date')

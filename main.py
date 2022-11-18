@@ -13,17 +13,6 @@ import project_const as const
 PlayersTable = Table('db.json', 'players_table')
 TournamentTable = Table('db.json', 'tournaments_table')
 
-
-def ask_date(obj: object, param: str):
-    #si que des dates demandées, ^plus besoin de mettre l'argument param, qui ne sert que pour le test sur l'instance date
-    # if isinstance(param, datetime.date):
-    day = int(input('jour'))
-    mounth = int(input('mois'))
-    year = int(input('année'))
-    new_date =  date(year, mounth, day)
-    obj.__dict__[param] = new_date
-# to use it : ask_date(tournament, 'start_date')
-
                 
 tournament_step = ['tournament_name', 'tournament_location', 'tournament_start_date', 'tournament_end_date', 'tournament_nb_round', 'tournament_rounds', 'tournament_players', 'tournament_time_control', 'tournament_description']
 player_step = ['player_firstname', 'player_lastname', 'player_birthday', 'player_gender', 'player_ranking']
@@ -172,19 +161,3 @@ while True:
     elif answer == 9:
         print('Au revoir !')
         break
-
-
-
-
-
-
-
-# create_tournament()
-# create_instance(Tournoi)
-
-# new_tournament()
-
-# Tournoi1 = Tournoi('tournoi1')
-# ask_date(Tournoi1.start_date)
-# ask(Tournoi1, 'tournament_name')
-# print(Tournoi1.__dict__)
