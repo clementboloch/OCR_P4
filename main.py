@@ -133,7 +133,7 @@ menu = '''\nQue voulez vous faire ? \n
     1 - Créer un tournoi\n
     2 - Ajouter un joueur\n
     3 - Changer le classement d'un joueur\n
-    4 - Liste de tous les joueurs (alpha ou classement)\n
+    4 - Liste de tous les joueurs\n
     5 - Liste des tournois\n
     6 - Liste des joueurs d'un tournoi\n
     7 - Liste des tours d'un tournoi\n
@@ -174,7 +174,7 @@ while True:
             sorted_players = sorted(players, key=attrgetter('player_lastname', 'player_firstname', 'player_ranking'))
         
         for index, player in enumerate(sorted_players):
-            print(f"{index + 1} - {player}")
+            print(f"{index + 1} - {player} (ranking: {player.player_ranking})")
     
     elif answer == 5:
         tournaments = import_all_data('tournaments_table', Tournoi)
