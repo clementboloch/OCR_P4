@@ -1,13 +1,13 @@
 from operator import attrgetter
 
-from util import input_date
+from util import input_date, serialize_object
 from Tournoi import Tournoi
 from Ronde import Ronde
 from Match import Match
 from Joueur import Joueur
 from datetime import date
 from algo_suisse import suisse_first, suisse_then, sort
-from db_manager import Table, serialize_object
+from db_manager import Table
 import project_const as const
 
 PlayersTable = Table('db.json', 'players_table')

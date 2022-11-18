@@ -35,11 +35,3 @@ class Table:
         for object in objects:
             created.append(Object(**object))
         return created
-
-
-# TODO: Mettre dans main
-def serialize_object(object: object):
-    return object.__dict__
-
-def serialize(created: list[object]):
-    return [object.__dict__ for object in created]
