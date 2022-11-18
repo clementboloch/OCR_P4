@@ -100,17 +100,17 @@ def new_tournament():
             print(f"{index + 1} - {player}")
         index = validate_int('num joueur : ', 1, len(potential_players_id))
         id = potential_players_id.pop(index - 1)
-        playerAdded = import_data_from_id('players_table', id)
-        Tournament.add_player(playerAdded)
+        Tournament.add_player(id)
 
+        playerAdded = import_data_from_id('players_table', id)
         if playerAdded.player_gender == 'F':
             print(f'{playerAdded} a bien été ajoutée au tournoi \n')
         else:
             print(f'{playerAdded} a bien été ajouté au tournoi \n')
     print(Tournament.__dict__)
 
-    # A remplacer par la suite, pour le moment gérer avec les instances, et pas avec les indices dans la base
-    players = Tournament.tournament_players
+    players_id = Tournament.tournament_players
+    players = [import_data_from_id('players_table', player_id) for player_id in players_id]
     pairs, played_pairs = suisse_first(players)
     print('Voilà les paires : ', pairs)
     
@@ -128,9 +128,10 @@ def new_tournament():
         print(f"{i + 1} - {sorted_players[i]}")
 
     # Mise à jour des classements
-    for player in sorted_players:
+    for player_id in Tournament.tournament_players:
+        player = import_data_from_id('players_table', player_id)
         new_rank = input(f"Nouveau classement du joueur {player} : ")
-        player.player_ranking = int(new_rank)
+        update_data('players_table', player_id, {'player_ranking': int(new_rank)})
     
     return Tournament
     

@@ -28,7 +28,7 @@ class Tournoi:
     
     step = ['tournament_name', 'tournament_location', 'tournament_time_control', 'tournament_description']
     
-    def __init__(self, tournament_name: str = f.word(), tournament_location: str = f.address(), tournament_start_date: date = today, tournament_end_date: date = today, tournament_nb_round: int = const.nb_round, tournament_rounds: list[Ronde] = [], tournament_players: list[Joueur] = [], tournament_time_control: str = 'non renseigné', tournament_description: str = 'non renseignée'):
+    def __init__(self, tournament_name: str = f.word(), tournament_location: str = f.address(), tournament_start_date: date = today, tournament_end_date: date = today, tournament_nb_round: int = const.nb_round, tournament_rounds: list[Ronde] = [], tournament_players: list[int] = [], tournament_time_control: str = 'non renseigné', tournament_description: str = 'non renseignée'):
         self.tournament_name = tournament_name
         self.tournament_location = tournament_location
         self.tournament_start_date = tournament_start_date
@@ -46,11 +46,11 @@ class Tournoi:
         self.tournament_rounds.append(round)
         return self
     
-    def add_player(self, player: Joueur):
-        if player in self.tournament_players:
+    def add_player(self, player_id: int):
+        if player_id in self.tournament_players:
             return False
         else:
-            self.tournament_players.append(player)
+            self.tournament_players.append(player_id)
             return True
 
     def del_player(self, player: Joueur):
