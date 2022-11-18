@@ -5,6 +5,13 @@ def save_data(table_name: str, serialized: dict):
     table = db.table(table_name)
     table.insert(serialized)
 
+
+def update_data(table_name: str, id: int, updated: dict):
+    db = TinyDB('db.json', indent=4, default=str)
+    table = db.table(table_name)
+    table.update(updated, doc_ids=[id])
+
+
 def save_all_data(table_name: str, serialized: list[dict]):
     db = TinyDB('db.json', indent=4, default=str)
     table = db.table(table_name)
@@ -15,7 +22,7 @@ def import_all_data(table_name: str, Object: object):
     db = TinyDB('db.json', indent = 4)
     table = db.table(table_name)
     objects = table.all()
-    
+
     created = []
     for object in objects:
         created.append(Object(**object))

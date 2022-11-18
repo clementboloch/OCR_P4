@@ -7,7 +7,7 @@ from Match import Match
 from Joueur import Joueur
 from datetime import date
 from algo_suisse import suisse_first, suisse_then, sort
-from db_manager import import_all_data, save_data, serialize_object
+from db_manager import import_all_data, save_data, serialize_object, update_data
 import project_const as const
 
 def ask_date(obj: object, param: str):
@@ -160,10 +160,10 @@ while True:
         for index, player in enumerate(players):
             print(f"{index + 1} - {player}")
         index = validate_int("", 1, len(players))
-        player = players[index - 1]
-        new_rank = input(f"Nouveau classement du joueur {player} : ")
-        player.player_ranking = int(new_rank)
-        print(player.player_ranking)
+        Player = players[index - 1]
+        print(f"Ancien classement du joueur {Player} : {Player.player_ranking}")
+        new_rank = input(f"Nouveau classement du joueur {Player} : ")
+        update_data('players_table', index, {'player_ranking': int(new_rank)})
     
     elif answer == 4:
         players = import_all_data('players_table', Joueur)
