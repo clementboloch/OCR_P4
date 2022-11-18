@@ -10,6 +10,12 @@ def save_data(table_name: str, serialized: dict):
     table = db.table(table_name)
     table.insert(serialized)
 
+def import_data_from_id(table_name: str, id: int):
+    db = TinyDB('db.json', indent=4, default=str)
+    table = db.table(table_name)
+    data = table.get(doc_id = id)
+    return data
+
 
 def update_data(table_name: str, id: int, updated: dict):
     db = TinyDB('db.json', indent=4, default=str)
