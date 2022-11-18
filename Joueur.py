@@ -1,7 +1,3 @@
-'''    
-Classement --> doit être positif
-'''
-
 import datetime
 from faker import Faker
 
@@ -40,18 +36,7 @@ class Joueur:
     def __str__(self):
         return str(self.player_firstname) + " " + str(self.player_lastname)
 
-# joueur1 = Joueur('a', 'A', no_date, 'M', 1)
-# joueur2 = Joueur('z', 'Z', no_date, 'M', 2)
-# joueur3 = Joueur('e', 'E', no_date, 'M', 3)
-# joueur4 = Joueur('r', 'R', no_date, 'M', 4)
-# joueur5 = Joueur('t', 'T', no_date, 'M', 5)
-# joueur6 = Joueur('y', 'Y', no_date, 'M', 6)
-# joueur7 = Joueur('u', 'U', no_date, 'M', 7)
-# joueur8 = Joueur('i', 'I', no_date, 'M', 8)
-# joueurs = [joueur1, joueur2, joueur3, joueur4, joueur5, joueur6, joueur7, joueur8]
-
 if __name__ == "__main__":
-    # print(f.gender())
     pass
 
 '''
