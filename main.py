@@ -1,6 +1,6 @@
 from operator import attrgetter
 
-from util import input_date, serialize_object, confirmation
+from util import input_date, serialize_object, confirmation, validate_int
 from Tournoi import Tournoi
 from Ronde import Ronde
 from Match import Match
@@ -23,16 +23,6 @@ def ask_date(obj: object, param: str):
     new_date =  date(year, mounth, day)
     obj.__dict__[param] = new_date
 # to use it : ask_date(tournament, 'start_date')
-
-def validate_int(text: str, min: int, max: int):
-    answer = input(text)
-    while not answer.isdigit():
-        print("Ceci n'est pas un nombre entier")
-        answer = input(text)
-    while (float(answer) < min or float(answer) > max):
-        print(f"Ceci n'est pas un nombre entier compris entre {min} et {max}")
-        answer = input(text)
-    return int(answer)
 
 def ask(obj: object, param: str):
     text = obj.scenario
