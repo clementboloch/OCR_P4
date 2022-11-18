@@ -1,5 +1,12 @@
 import datetime
 
+def create_instance(obj):
+    Instance = obj()
+    for param in Instance.step:
+        ask(Instance, param)
+    print(Instance.__dict__)
+    return Instance
+    
 def input_date(text: str):
     print(text)
     day = int(input('jour'))

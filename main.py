@@ -1,6 +1,6 @@
 from operator import attrgetter
 
-from util import input_date, serialize_object, confirmation, validate_int, ask
+from util import input_date, serialize_object, confirmation, validate_int, ask, create_instance
 from Tournoi import Tournoi
 from Ronde import Ronde
 from Match import Match
@@ -16,13 +16,6 @@ TournamentTable = Table('db.json', 'tournaments_table')
                 
 tournament_step = ['tournament_name', 'tournament_location', 'tournament_start_date', 'tournament_end_date', 'tournament_nb_round', 'tournament_rounds', 'tournament_players', 'tournament_time_control', 'tournament_description']
 player_step = ['player_firstname', 'player_lastname', 'player_birthday', 'player_gender', 'player_ranking']
-
-def create_instance(obj):
-    Instance = obj()
-    for param in Instance.step:
-        ask(Instance, param)
-    print(Instance.__dict__)
-    return Instance
 
 def new_tournament():
     nb_potential_players = PlayersTable.ask_size()
