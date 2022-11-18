@@ -33,6 +33,7 @@ def suisse_first(players: list[Joueur]):
     played_pairs = first_pairs.copy()
     return first_pairs, played_pairs
 
+# TODO: bug, fait plus de 8 match par round !!
 def suisse_then(players: list[Joueur], played_pairs: list):
     nb_players = len(players)
     sorted_list = sort(players)
