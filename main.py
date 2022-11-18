@@ -147,7 +147,7 @@ while True:
         NewTournament = new_tournament()
         if NewTournament:
             serializedNewTournament = serialize_object(NewTournament)
-            save_data('players_table', serializedNewTournament)
+            save_data('tournaments_table', serializedNewTournament)
 
     elif answer == 2:
         NewPlayer = create_instance(Joueur)
