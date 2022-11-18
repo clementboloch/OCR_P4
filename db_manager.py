@@ -1,5 +1,10 @@
 from tinydb import TinyDB
 
+def ask_size(table_name: str):
+    db = TinyDB('db.json', indent=4, default=str)
+    table = db.table(table_name)
+    return len(table)
+
 def save_data(table_name: str, serialized: dict):
     db = TinyDB('db.json', indent=4, default=str)
     table = db.table(table_name)
