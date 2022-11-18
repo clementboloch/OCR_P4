@@ -7,8 +7,12 @@ from Match import Match
 from Joueur import Joueur
 from datetime import date
 from algo_suisse import suisse_first, suisse_then, sort
-from db_manager import import_all_data, save_data, serialize_object, update_data, ask_size, import_data_from_id
+from db_manager import Table, serialize_object
 import project_const as const
+
+PlayersTable = Table('db.json', 'players_table')
+TournamentTable = Table('db.json', 'tournaments_table')
+
 
 def ask_date(obj: object, param: str):
     #si que des dates demandées, ^plus besoin de mettre l'argument param, qui ne sert que pour le test sur l'instance date
@@ -86,7 +90,7 @@ def create_instance(obj):
     return Instance
 
 def new_tournament():
-    nb_potential_players = ask_size('players_table')
+    nb_potential_players = PlayersTable.ask_size()
     potential_players_id = list(range(1, nb_potential_players + 1))
     if nb_potential_players < const.nb_player:
         print(f"Il faut un minmum de {const.nb_player} joueurs pour créer le tournoi. \nMerci de bien vouloir ajouter au moins {const.nb_player - nb_potential_players} joueurs.")
@@ -96,13 +100,13 @@ def new_tournament():
     for _ in range(const.nb_player):
         print("Joueurs disponibles :")
         for index, player_id in enumerate(potential_players_id):
-            player = import_data_from_id('players_table', Joueur, player_id)
+            player = PlayersTable.import_data_from_id(Joueur, player_id)
             print(f"{index + 1} - {player}")
         index = validate_int('num joueur : ', 1, len(potential_players_id))
         id = potential_players_id.pop(index - 1)
         Tournament.add_player(id)
 
-        playerAdded = import_data_from_id('players_table', Joueur, id)
+        playerAdded = PlayersTable.import_data_from_id(Joueur, id)
         if playerAdded.player_gender == 'F':
             print(f'{playerAdded} a bien été ajoutée au tournoi \n')
         else:
@@ -110,7 +114,7 @@ def new_tournament():
     print(Tournament.__dict__)
 
     players_id = Tournament.tournament_players
-    players = [import_data_from_id('players_table', Joueur, player_id) for player_id in players_id]
+    players = [PlayersTable.import_data_from_id(Joueur, player_id) for player_id in players_id]
     pairs, played_pairs = suisse_first(players)
     print('Voilà les paires : ', pairs)
     
@@ -130,9 +134,9 @@ def new_tournament():
 
     # Mise à jour des classements
     for player_id in Tournament.tournament_players:
-        player = import_data_from_id('players_table', Joueur, player_id)
+        player = PlayersTable.import_data_from_id(Joueur, player_id)
         new_rank = input(f"Nouveau classement du joueur {player} : ")
-        update_data('players_table', player_id, {'player_ranking': int(new_rank)})
+        PlayersTable.update_data(player_id, {'player_ranking': int(new_rank)})
     
     return Tournament
     
@@ -156,15 +160,15 @@ while True:
         NewTournament = new_tournament()
         if NewTournament:
             serializedNewTournament = serialize_object(NewTournament)
-            save_data('tournaments_table', serializedNewTournament)
+            TournamentTable.save_data(serializedNewTournament)
 
     elif answer == 2:
         NewPlayer = create_instance(Joueur)
         serializedNewPlayer = serialize_object(NewPlayer)
-        save_data('players_table', serializedNewPlayer)
+        PlayersTable.save_data(serializedNewPlayer)
     
     elif answer == 3:
-        players = import_all_data('players_table', Joueur)
+        players = PlayersTable.import_all_data(Joueur)
         print("De quel joueur voulez-vous changer le classement ?")
         for index, player in enumerate(players):
             print(f"{index + 1} - {player}")
@@ -172,10 +176,10 @@ while True:
         Player = players[index - 1]
         print(f"Ancien classement du joueur {Player} : {Player.player_ranking}")
         new_rank = input(f"Nouveau classement du joueur {Player} : ")
-        update_data('players_table', index, {'player_ranking': int(new_rank)})
+        PlayersTable.update_data(index, {'player_ranking': int(new_rank)})
     
     elif answer == 4:
-        players = import_all_data('players_table', Joueur)
+        players = PlayersTable.import_all_data(Joueur)
         sort = validate_int("1 - Par classement \n2 - Par ordre alphabétique\n", 1, 2)
         if sort == 1:
             sorted_players = sorted(players, key=attrgetter('player_ranking', 'player_lastname', 'player_firstname'))
@@ -186,13 +190,13 @@ while True:
             print(f"{index + 1} - {player} (classement : {player.player_ranking})")
     
     elif answer == 5:
-        tournaments = import_all_data('tournaments_table', Tournoi)
+        tournaments = TournamentTable.import_all_data(Tournoi)
         for index, tournament in enumerate(tournaments):
             print(f"{index + 1} - {tournament}")
 
     elif answer in [6, 7, 8]:
         search_key = {6: 'joueurs', 7: 'tours', 8: 'match'}
-        tournaments = import_all_data('tournaments_table', Tournoi)
+        tournaments = TournamentTable.import_all_data(Tournoi)
         print(f"De quel tournoi voulez-vous lister les {search_key[answer]} ?")
         for index, tournament in enumerate(tournaments):
             print(f"{index + 1} - {tournament}")
@@ -202,7 +206,7 @@ while True:
         if answer == 6:
             sort = validate_int("1 - Par classement \n2 - Par ordre alphabétique \n", 1, 2)
             # TODO : méthode d'instance de Tournoi : lister ses joueurs
-            players = [import_data_from_id('players_table', Joueur, player_id) for player_id in tournament.tournament_players]
+            players = [PlayersTable.import_data_from_id(Joueur, player_id) for player_id in tournament.tournament_players]
             if sort == 1:
                 sorted_players = sorted(players, key=attrgetter('player_ranking', 'player_lastname', 'player_firstname'))
             else:
