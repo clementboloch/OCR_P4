@@ -6,21 +6,14 @@ now = lambda: datetime.now()
 
 
 class Ronde: 
-    # number = 1
-
-    def __init__(self, name):
-        # self.tournament = tournament.add_round(self)
-        # if name == 'auto':
-            # self.name = f"Round {self.number}"
-            # Ronde.number += 1
-        # else:
-        #     self.name = name
+    def __init__(self, name: str, start: datetime = now(), end: datetime = now(), matchs: list = []):
         if isinstance(name, int):
             self.name = f"Round {name}"
         else:
             self.name = name
-        self.start = now()
-        self.matchs = []
+        self.start = start
+        self.end = end
+        self.matchs = matchs
 
     def __str__(self):
         return self.name
