@@ -21,7 +21,6 @@ class Ronde:
     
     def add_match(self, match: Match):
         self.matchs.append(match.get_match())
-        return self
 
     def end_round(self):
         self.end = now()
