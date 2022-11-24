@@ -62,8 +62,17 @@ def suisse_then(players: list[Joueur], played_pairs: list):
 #             print(score)
 #             pair[0]._player_score += score
 #             pair[1]._player_score += 1 - score
-        
 
+#     joueur1 = Joueur('1', 'A', no_date, 'M', 1)
+#     joueur2 = Joueur('2', 'Z', no_date, 'M', 2)
+#     joueur3 = Joueur('3', 'E', no_date, 'M', 3)
+#     joueur4 = Joueur('4', 'R', no_date, 'M', 4)
+#     joueur5 = Joueur('5', 'T', no_date, 'M', 5)
+#     joueur6 = Joueur('6', 'Y', no_date, 'M', 6)
+#     joueur7 = Joueur('7', 'U', no_date, 'M', 7)
+#     joueur8 = Joueur('8', 'I', no_date, 'M', 8)
+
+#     joueurs = [joueur1, joueur2, joueur3, joueur4, joueur5, joueur6, joueur7, joueur8]
 
 #     round, played_pairs = suisse_first(joueurs)
 #     print(round)
@@ -71,17 +80,3 @@ def suisse_then(players: list[Joueur], played_pairs: list):
 #         result(round)
 #         round, played_pairs = suisse_then(joueurs, played_pairs)
 #         print(round)
-
-
-# joueur1 = Joueur('1', 'A', no_date, 'M', 1)
-# joueur2 = Joueur('2', 'Z', no_date, 'M', 2)
-# joueur3 = Joueur('3', 'E', no_date, 'M', 3)
-# joueur4 = Joueur('4', 'R', no_date, 'M', 4)
-# joueur5 = Joueur('5', 'T', no_date, 'M', 5)
-# joueur6 = Joueur('6', 'Y', no_date, 'M', 6)
-# joueur7 = Joueur('7', 'U', no_date, 'M', 7)
-# joueur8 = Joueur('8', 'I', no_date, 'M', 8)
-
-# joueur6._player_score = 1
-
-# joueurs = [joueur1, joueur2, joueur3, joueur4, joueur5, joueur6, joueur7, joueur8]
