@@ -46,7 +46,7 @@ def new_tournament():
     print('Voilà les paires : ', pairs)
     
     for i in range(Tournament.tournament_nb_round - 1):
-        Round = Ronde(i + 1)
+        Round = Ronde(str(i + 1))
         Round.ask_score(pairs)
         Round.end_round()
         Tournament.add_round(Round)
