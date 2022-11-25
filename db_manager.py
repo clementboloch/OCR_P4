@@ -14,7 +14,7 @@ class Table:
     def save_data(self, serialized: dict):
         self.table.insert(serialized)
 
-    def import_data_from_id(self, Object: object, id: int):
+    def import_data_from_id(self, Object, id: int):
         data = self.table.get(doc_id = id)
         Obj = Object(**data)
         return Obj
@@ -28,7 +28,7 @@ class Table:
         self.table.truncate()
         self.table.insert_multiple(serialized)
 
-    def import_all_data(self, Object: object):
+    def import_all_data(self, Object):
         objects = self.table.all()
 
         created = []

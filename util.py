@@ -1,4 +1,4 @@
-import datetime
+from datetime import date
 
 def create_instance(obj):
     Instance = obj()
@@ -12,7 +12,7 @@ def input_date(text: str):
     day = int(input('jour'))
     mounth = int(input('mois'))
     year = int(input('année'))
-    new_date =  datetime.date(year, mounth, day)
+    new_date =  date(year, mounth, day)
     return new_date
 
 def serialize_object(object: object):
@@ -44,7 +44,7 @@ def validate_int(text: str, min: int, max: int):
         answer = input(text)
     return int(answer)
 
-def ask(obj: object, param: str):
+def ask(obj, param: str):
     text = obj.scenario
     for step in text[param]:
         try:
