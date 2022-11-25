@@ -1,10 +1,11 @@
 from datetime import date
 from faker import Faker
 
+from db_manager import Table
 from util import input_date, serialize_object
 from Ronde import Ronde
 from Joueur import Joueur
-import project_const as const
+from project_const import nb_round
 
 f = Faker(locale = "fr_FR")
 
@@ -12,6 +13,7 @@ today = date.today()
 no_date = date(1, 1, 1)
 
 class Tournoi:
+    Table = Table('db.json', 'tournaments_table')
     created = []
 
     scenario = {
@@ -28,7 +30,7 @@ class Tournoi:
     
     step = ['tournament_name', 'tournament_location', 'tournament_time_control', 'tournament_description']
     
-    def __init__(self, tournament_name: str = f.word(), tournament_location: str = f.address(), tournament_start_date: date = today, tournament_end_date: date = today, tournament_nb_round: int = const.nb_round, tournament_rounds: list[dict] = [], tournament_players: list[int] = [], tournament_time_control: str = 'non renseigné', tournament_description: str = 'non renseignée'):
+    def __init__(self, tournament_name: str = f.word(), tournament_location: str = f.address(), tournament_start_date: date = today, tournament_end_date: date = today, tournament_nb_round: int = nb_round, tournament_rounds: list[dict] = [], tournament_players: list[int] = [], tournament_time_control: str = 'non renseigné', tournament_description: str = 'non renseignée'):
         self.tournament_name = tournament_name
         self.tournament_location = tournament_location
         self.tournament_start_date = tournament_start_date
@@ -53,21 +55,10 @@ class Tournoi:
         else:
             self.tournament_players.append(player_id)
             return True
-
-    def del_player(self, player: Joueur):
-        if player in self.tournament_players:
-            self.tournament_players.remove(player)
-            return "message de confirmation"
-        else:
-            return "Le joueur n'était pas inscrit au tournoi"
     
-    def def_time(self, time_control):
-        if time_control in ["bullet", "blitz", "coup rapide"]:
-            self.time_control = time_control
-            return "message de confirmation"
-        else:
-            return "message erreur"
-        # faire en sorte que le main (controler) renvoie les valeurs par défault (un bullet, un blitz ou un coup rapide)
+    def list_players(self):
+        return [Joueur.import_player_from_id(player_id) for player_id in self.tournament_players]
+
 
         
 
@@ -82,8 +73,3 @@ préciser dans la console que la date est définie automatiquement à la date du
 Faire des return quel que soit l'alternatif ? 
 
 '''
-
-'''
-• Tournées
-    ◦ La liste des instances rondes.
-    '''
