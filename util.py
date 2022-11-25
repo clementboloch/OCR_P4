@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, datetime
 
 
 def create_instance(obj):
@@ -83,6 +83,10 @@ def ask(obj, param: str):
             if type != print and inp != '':
                 obj.__dict__[param] = inp
             conf = confirmation(type)
+
+
+def now():
+    return datetime.now()
 
 
 # TODO: vérifier la fonction

@@ -1,12 +1,13 @@
 import datetime
 from faker import Faker
 
+# from project_const import no_date
+
 from db_manager import Table
 # TODO: utiliser player_birthday -> attention, voir comment gérer la date pour l'aniversaire : texte, objet date ?
 # from util import input_date
 
 f = Faker(locale="fr_FR")
-no_date = datetime.date(1, 1, 1)
 
 
 class Joueur:
