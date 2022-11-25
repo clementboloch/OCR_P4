@@ -39,22 +39,25 @@ def new_tournament():
 
     return Tournament
 
+
 def make_rounds(Tournament: Tournoi, players: list[Joueur]):
     pairs, played_pairs = suisse_first(players)
-    print('Voilà les paires : ', pairs)  
+    print('Voilà les paires : ', pairs)
     for i in range(Tournament.tournament_nb_round - 1):
-        Round = Ronde(str(i + 1))
+        Round = Ronde(str(i + 1), [])
         Round.ask_score(pairs)
         Round.end_round()
         Tournament.add_round(Round)
         pairs, played_pairs = suisse_then(players, played_pairs)
         print('Voilà les paires : ', pairs)
 
+
 def display_results(players: list[Joueur]):
     sorted_players = sort(players)
     print("\n Resultats :")
     for i in range(len(players)):
         print(f"{i + 1} - {sorted_players[i]}")
+
 
 def update_ranks(Tournament: Tournoi):
     for player_id in Tournament.tournament_players:
@@ -73,7 +76,7 @@ menu = '''\nQue voulez vous faire ? \n
     7 - Liste des tours d'un tournoi\n
     8 - Liste des matchs d'un tournoi\n
     9 - Quitter le porgramme\n'''
-    
+
 while True:
     answer = validate_int(menu, 1, 9)
 
@@ -87,7 +90,7 @@ while True:
         NewPlayer = create_instance(Joueur)
         serializedNewPlayer = serialize_object(NewPlayer)
         Joueur.Table.save_data(serializedNewPlayer)
-    
+
     elif answer == 3:
         players = Joueur.Table.import_all_data(Joueur)
         print("De quel joueur voulez-vous changer le classement ?")
@@ -98,7 +101,7 @@ while True:
         print(f"Ancien classement du joueur {Player} : {Player.player_ranking}")
         new_rank = input(f"Nouveau classement du joueur {Player} : ")
         Joueur.Table.update_data(index, {'player_ranking': int(new_rank)})
-    
+
     elif answer == 4:
         players = Joueur.Table.import_all_data(Joueur)
         sort_type = validate_int("1 - Par classement \n2 - Par ordre alphabétique\n", 1, 2)
@@ -106,10 +109,10 @@ while True:
             sorted_players = sorted(players, key=attrgetter('player_ranking', 'player_lastname', 'player_firstname'))
         else:
             sorted_players = sorted(players, key=attrgetter('player_lastname', 'player_firstname', 'player_ranking'))
-        
+
         for index, player in enumerate(sorted_players):
             print(f"{index + 1} - {player} (classement : {player.player_ranking})")
-    
+
     elif answer == 5:
         tournaments = Tournoi.Table.import_all_data(Tournoi)
         for index, tournament in enumerate(tournaments):
@@ -130,7 +133,7 @@ while True:
             if sort_type == 1:
                 sorted_players = sorted(players, key=attrgetter('player_ranking', 'player_lastname', 'player_firstname'))
             else:
-                sorted_players = sorted(players, key=attrgetter('player_lastname', 'player_firstname', 'player_ranking'))            
+                sorted_players = sorted(players, key=attrgetter('player_lastname', 'player_firstname', 'player_ranking'))
             for index, player in enumerate(sorted_players):
                 print(f"{index + 1} - {player} (classement : {player.player_ranking})")
         elif answer == 7:
@@ -142,7 +145,7 @@ while True:
                 print(f"{index + 1} - {Round}")
                 for index, match in enumerate(Round.matchs):
                     print(f"      {index + 1} - {match}")
-    
+
     elif answer == 9:
         print('Au revoir !')
         break

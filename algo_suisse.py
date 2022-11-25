@@ -1,28 +1,23 @@
-'''
-1. Au début du premier tour, triez tous les joueurs en fonction de leur classement.
-2. Divisez les joueurs en deux moitiés, une supérieure et une inférieure. Le meilleur joueur de la moitié supérieure est jumelé avec le meilleur joueur de la moitié inférieure, et ainsi de suite. Si nous avons huit joueurs triés par rang, alors le joueur 1 est jumelé avec le joueur 5, le joueur 2 est jumelé avec le joueur 6, etc.
-3. Au prochain tour, triez tous les joueurs en fonction de leur nombre total de points. Si plusieurs joueurs ont le même nombre de points, triez-les en fonction de leur rang.
-4. Associez le joueur 1 avec le joueur 2, le joueur 3 avec le joueur 4, et ainsi de suite. Si le joueur 1 a déjà joué contre le joueur 2, associez-le plutôt au joueur 3.
-5. Répétez les étapes 3 et 4 jusqu'à ce que le tournoi soit terminé.
-'''
-
 from operator import attrgetter
-import random
 
-from Joueur import Joueur, no_date
+from Joueur import Joueur
 
 
-def visible(l: list[Joueur]):
-    return [player.player_ranking for player in l]
+def visible(players: list[Joueur]):
+    return [player.player_ranking for player in players]
 
-def sort_score(l: list[Joueur]):
-    return sorted(l, key=attrgetter('_player_score'), reverse=True)
 
-def sort_rank(l: list[Joueur]):
-    return sorted(l, key=attrgetter('player_ranking'))
+def sort_score(players: list[Joueur]):
+    return sorted(players, key=attrgetter('_player_score'), reverse=True)
 
-def sort(l: list[Joueur]):
-    return sort_score(sort_rank(l))
+
+def sort_rank(players: list[Joueur]):
+    return sorted(players, key=attrgetter('player_ranking'))
+
+
+def sort(players: list[Joueur]):
+    return sort_score(sort_rank(players))
+
 
 def suisse_first(players: list[Joueur]):
     for player in players:
@@ -33,7 +28,7 @@ def suisse_first(players: list[Joueur]):
     played_pairs = first_pairs.copy()
     return first_pairs, played_pairs
 
-# TODO: bug, fait plus de 8 match par round !!
+
 def suisse_then(players: list[Joueur], played_pairs: list):
     nb_players = len(players)
     sorted_list = sort(players)
@@ -56,6 +51,10 @@ def suisse_then(players: list[Joueur], played_pairs: list):
 
 
 # if __name__ == "__main__":
+#     import random
+#     from Joueur import no_date
+
+
 #     def result(round):
 #         for pair in round:
 #             score = random.randint(0, 2) / 2

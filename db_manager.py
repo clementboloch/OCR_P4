@@ -1,5 +1,6 @@
 from tinydb import TinyDB
 
+
 class Table:
     def __init__(self, db_name: str, table_name: str):
         self.db_name = db_name
@@ -10,19 +11,17 @@ class Table:
 
     def ask_size(self):
         return len(self.table)
-    
+
     def save_data(self, serialized: dict):
         self.table.insert(serialized)
 
     def import_data_from_id(self, Object, id: int):
-        data = self.table.get(doc_id = id)
+        data = self.table.get(doc_id=id)
         Obj = Object(**data)
         return Obj
 
-
     def update_data(self, id: int, updated: dict):
         self.table.update(updated, doc_ids=[id])
-
 
     def save_all_data(self, serialized: list[dict]):
         self.table.truncate()

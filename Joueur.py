@@ -2,10 +2,12 @@ import datetime
 from faker import Faker
 
 from db_manager import Table
-from util import input_date
+# TODO: utiliser player_birthday -> attention, voir comment gérer la date pour l'aniversaire : texte, objet date ?
+# from util import input_date
 
-f = Faker(locale = "fr_FR")
+f = Faker(locale="fr_FR")
 no_date = datetime.date(1, 1, 1)
+
 
 class Joueur:
     Table = Table('db.json', 'players_table')
@@ -33,16 +35,13 @@ class Joueur:
         self.player_gender = player_gender
         self.player_ranking = player_ranking
         self._player_score = _player_score
-    
+
     def __repr__(self):
         return str(self.player_firstname) + " " + str(self.player_lastname)
 
     def __str__(self):
         return str(self.player_firstname) + " " + str(self.player_lastname)
 
+
 if __name__ == "__main__":
     pass
-
-'''
-- attention, voir comment gérer la date pour l'aniversaire : texte, objet date ?
-'''

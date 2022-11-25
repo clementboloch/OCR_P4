@@ -7,10 +7,11 @@ from Ronde import Ronde
 from Joueur import Joueur
 from project_const import nb_round
 
-f = Faker(locale = "fr_FR")
+f = Faker(locale="fr_FR")
 
 today = date.today()
 no_date = date(1, 1, 1)
+
 
 class Tournoi:
     Table = Table('db.json', 'tournaments_table')
@@ -26,9 +27,9 @@ class Tournoi:
         'tournament_time_control': [{'type': input, 'text': "\n\ntime control : \n", 'answers': ['bullet', 'blitz', 'coup rapide']}],
         'tournament_description': [{'type': input, 'text': "\n\ndescription : \n"}],
     }
-    
+
     step = ['tournament_name', 'tournament_location', 'tournament_time_control', 'tournament_description']
-    
+
     def __init__(self, tournament_name: str = f.word(), tournament_location: str = f.address(), tournament_start_date: date = today, tournament_end_date: date = today, tournament_nb_round: int = nb_round, tournament_rounds: list[dict] = [], tournament_players: list[int] = [], tournament_time_control: str = 'non renseigné', tournament_description: str = 'non renseignée'):
         self.tournament_name = tournament_name
         self.tournament_location = tournament_location
@@ -42,24 +43,22 @@ class Tournoi:
 
     def __str__(self):
         return f"{self.tournament_name}, le {self.tournament_start_date}"
-    
+
     def add_round(self, round: Ronde):
         serializedRound = serialize_object(round)
         self.tournament_rounds.append(serializedRound)
         return self
-    
+
     def add_player(self, player_id: int):
         if player_id in self.tournament_players:
             return False
         else:
             self.tournament_players.append(player_id)
             return True
-    
+
     def list_players(self):
         return [Joueur.import_player_from_id(player_id) for player_id in self.tournament_players]
 
-
-        
 
 if __name__ == '__main__':
     Tournoi1 = Tournoi('tournoi1')
@@ -67,8 +66,4 @@ if __name__ == '__main__':
     # print(Tournoi1.__dict__)
     print(f.word())
 
-'''
-préciser dans la console que la date est définie automatiquement à la date du jour
-Faire des return quel que soit l'alternatif ? 
-
-'''
+# TODO: préciser dans la console que la date est définie automatiquement à la date du jour
