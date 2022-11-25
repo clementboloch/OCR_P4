@@ -33,9 +33,15 @@ def new_tournament():
     print(Tournament.__dict__)
 
     players = Tournament.list_players()
+    make_rounds(Tournament, players)
+    display_results(players)
+    update_ranks(Tournament)
+
+    return Tournament
+
+def make_rounds(Tournament: Tournoi, players: list[Joueur]):
     pairs, played_pairs = suisse_first(players)
-    print('Voilà les paires : ', pairs)
-    
+    print('Voilà les paires : ', pairs)  
     for i in range(Tournament.tournament_nb_round - 1):
         Round = Ronde(str(i + 1))
         Round.ask_score(pairs)
@@ -43,23 +49,18 @@ def new_tournament():
         Tournament.add_round(Round)
         pairs, played_pairs = suisse_then(players, played_pairs)
         print('Voilà les paires : ', pairs)
-    
-    # Affichage des résultats
-    # TODO: transformer en classe
+
+def display_results(players: list[Joueur]):
     sorted_players = sort(players)
     print("\n Resultats :")
     for i in range(len(players)):
         print(f"{i + 1} - {sorted_players[i]}")
 
-    # Mise à jour des classements
-    # TODO: transformer en classe
+def update_ranks(Tournament: Tournoi):
     for player_id in Tournament.tournament_players:
         player = Joueur.import_player_from_id(player_id)
         new_rank = input(f"Nouveau classement du joueur {player} : ")
         Joueur.Table.update_data(player_id, {'player_ranking': int(new_rank)})
-    
-    return Tournament
-    
 
 
 menu = '''\nQue voulez vous faire ? \n
@@ -100,8 +101,8 @@ while True:
     
     elif answer == 4:
         players = Joueur.Table.import_all_data(Joueur)
-        sort = validate_int("1 - Par classement \n2 - Par ordre alphabétique\n", 1, 2)
-        if sort == 1:
+        sort_type = validate_int("1 - Par classement \n2 - Par ordre alphabétique\n", 1, 2)
+        if sort_type == 1:
             sorted_players = sorted(players, key=attrgetter('player_ranking', 'player_lastname', 'player_firstname'))
         else:
             sorted_players = sorted(players, key=attrgetter('player_lastname', 'player_firstname', 'player_ranking'))
@@ -124,9 +125,9 @@ while True:
         tournament = tournaments[index - 1]
         print(f"Liste des {search_key[answer]} du tournoi {tournament.tournament_name}")
         if answer == 6:
-            sort = validate_int("1 - Par classement \n2 - Par ordre alphabétique \n", 1, 2)
+            sort_type = validate_int("1 - Par classement \n2 - Par ordre alphabétique \n", 1, 2)
             players = tournament.list_players()
-            if sort == 1:
+            if sort_type == 1:
                 sorted_players = sorted(players, key=attrgetter('player_ranking', 'player_lastname', 'player_firstname'))
             else:
                 sorted_players = sorted(players, key=attrgetter('player_lastname', 'player_firstname', 'player_ranking'))            
