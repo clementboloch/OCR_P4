@@ -30,7 +30,6 @@ class Table:
 
     def import_all_data(self, Object):
         objects = self.table.all()
-
         created = []
         for object in objects:
             created.append(Object(**object))

@@ -14,7 +14,6 @@ no_date = date(1, 1, 1)
 
 class Tournoi:
     Table = Table('db.json', 'tournaments_table')
-    created = []
 
     scenario = {
         'tournament_name': [{'type': input, 'text': "\n\nVeuillez saisir le nom de l'événement : \n"}],

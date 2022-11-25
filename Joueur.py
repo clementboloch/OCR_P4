@@ -9,7 +9,6 @@ no_date = datetime.date(1, 1, 1)
 
 class Joueur:
     Table = Table('db.json', 'players_table')
-    created = []
 
     scenario = {
         'player_firstname': [{'type': input, 'text': "\n\nfirst name : \n"}],
