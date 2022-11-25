@@ -62,7 +62,7 @@ def display_results(players: list[Joueur]):
 def update_ranks(Tournament: Tournoi):
     for player_id in Tournament.tournament_players:
         player = Joueur.import_player_from_id(player_id)
-        new_rank = input(f"Nouveau classement du joueur {player} : ")
+        new_rank = validate_int(f"Nouveau classement du joueur {player} : ", 1)
         Joueur.Table.update_data(player_id, {'player_ranking': int(new_rank)})
 
 

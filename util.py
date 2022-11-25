@@ -40,12 +40,17 @@ def confirmation(type):
             print("\nJe n'ai pas compris, merci de recommencer.")
 
 
-def validate_int(text: str, min: int, max: int):
+def validate_int(text: str, min: int, max=-1):
     answer = input(text)
     while not answer.isdigit():
         print("Ceci n'est pas un nombre entier")
         answer = input(text)
-    while (float(answer) < min or float(answer) > max):
+    if max == -1:
+        max_condition = False
+        max = "l'infini"
+    else:
+        max_condition = float(answer) > max
+    while (float(answer) < min or max_condition):
         print(f"Ceci n'est pas un nombre entier compris entre {min} et {max}")
         answer = input(text)
     return int(answer)
