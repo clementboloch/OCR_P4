@@ -1,6 +1,6 @@
 from operator import attrgetter
 
-from Joueur import Joueur
+from Model.Joueur import Joueur
 
 
 def visible(players: list[Joueur]):

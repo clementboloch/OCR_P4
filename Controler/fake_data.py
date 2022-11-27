@@ -1,5 +1,5 @@
-from Joueur import Joueur
-from Tournoi import Tournoi
+from Model.Joueur import Joueur
+from Model.Tournoi import Tournoi
 from util import serialize_object
 
 NewTournament = Tournoi()

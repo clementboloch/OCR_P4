@@ -1,11 +1,11 @@
 from operator import attrgetter
 
-from util import serialize_object, validate_int, create_instance
-from Tournoi import Tournoi
-from Ronde import Ronde
-from Joueur import Joueur
-from algo_suisse import suisse_first, suisse_then, sort
-from project_const import nb_player
+from Controler.util import serialize_object, validate_int, create_instance
+from Controler.algo_suisse import suisse_first, suisse_then, sort
+from Controler.project_const import nb_player
+from Model.Tournoi import Tournoi
+from Model.Ronde import Ronde
+from Model.Joueur import Joueur
 
 
 def new_tournament():

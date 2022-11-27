@@ -2,10 +2,10 @@ from datetime import date
 from faker import Faker
 
 from db_manager import Table
-from util import input_date, serialize_object
+from Controler.util import input_date, serialize_object
 from Ronde import Ronde
 from Joueur import Joueur
-from project_const import nb_round
+from Controler.project_const import nb_round
 
 f = Faker(locale="fr_FR")
 
@@ -24,13 +24,18 @@ class Tournoi:
         'tournament_nb_round': [{'type': input, 'text': "\n\nnb round : \n"}],
         'tournament_rounds': [{'type': input, 'text': "\n\nround : \n"}],
         'tournament_players': [{'type': input, 'text': "\n\nplayers : \n"}],
-        'tournament_time_control': [{'type': input, 'text': "\n\ntime control : \n", 'answers': ['bullet', 'blitz', 'coup rapide']}],
+        'tournament_time_control': [{'type': input, 'text': "\n\ntime control : \n",
+                                    'answers': ['bullet', 'blitz', 'coup rapide']}],
         'tournament_description': [{'type': input, 'text': "\n\ndescription : \n"}],
     }
 
     step = ['tournament_name', 'tournament_location', 'tournament_time_control', 'tournament_description']
 
-    def __init__(self, tournament_name: str = f.word(), tournament_location: str = f.address(), tournament_start_date: date = today, tournament_end_date: date = today, tournament_nb_round: int = nb_round, tournament_rounds: list[dict] = [], tournament_players: list[int] = [], tournament_time_control: str = 'non renseigné', tournament_description: str = 'non renseignée'):
+    def __init__(self, tournament_name: str = f.word(), tournament_location: str = f.address(),
+                 tournament_start_date: date = today, tournament_end_date: date = today,
+                 tournament_nb_round: int = nb_round, tournament_rounds: list[dict] = [],
+                 tournament_players: list[int] = [], tournament_time_control: str = 'non renseigné',
+                 tournament_description: str = 'non renseignée'):
         self.tournament_name = tournament_name
         self.tournament_location = tournament_location
         self.tournament_start_date = tournament_start_date
