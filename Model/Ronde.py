@@ -1,7 +1,7 @@
 from datetime import datetime
 
-from Match import Match
-from Joueur import Joueur
+from Model.Match import Match
+from Model.Joueur import Joueur
 from Controler.util import validate_value, now
 from Controler.project_const import no_datetime
 

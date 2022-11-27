@@ -1,4 +1,4 @@
-from Joueur import Joueur
+from Model.Joueur import Joueur
 
 
 class Match:

@@ -1,10 +1,10 @@
 from datetime import date
 from faker import Faker
 
-from db_manager import Table
+from Model.db_manager import Table
 from Controler.util import input_date, serialize_object
-from Ronde import Ronde
-from Joueur import Joueur
+from Model.Ronde import Ronde
+from Model.Joueur import Joueur
 from Controler.project_const import nb_round
 
 f = Faker(locale="fr_FR")
@@ -14,7 +14,7 @@ no_date = date(1, 1, 1)
 
 
 class Tournoi:
-    Table = Table('db.json', 'tournaments_table')
+    Table = Table('app/db.json', 'tournaments_table')
 
     scenario = {
         'tournament_name': [{'type': input, 'text': "\n\nVeuillez saisir le nom de l'événement : \n"}],
