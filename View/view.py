@@ -44,7 +44,7 @@ def new_tournament():
 def make_rounds(Tournament: Tournoi, players: list[Joueur]):
     pairs, played_pairs = suisse_first(players)
     print('Voilà les paires : ', pairs)
-    for i in range(Tournament.tournament_nb_round - 1):
+    for i in range(Tournament.tournament_nb_round):
         Round = Ronde(str(i + 1), [])
         Round.ask_score(pairs)
         Round.end_round()
