@@ -28,8 +28,12 @@ class Joueur:
     def import_player_from_id(cls, player_id):
         return cls.Table.import_data_from_id(cls, player_id)
 
-    # def __init__(self, player_firstname: str = 'non renseigné', player_lastname: str = 'non renseigné', player_birthday: datetime.date = no_date, player_gender: str = '', player_ranking: int = -1, _player_score: float = 0):
-    def __init__(self, player_firstname: str = f.first_name(), player_lastname: str = f.last_name(), player_birthday: datetime.date = f.date(), player_gender: str = '', player_ranking: int = int(Faker().numerify(text="#%")), _player_score: float = 0):
+    # def __init__(self, player_firstname: str = 'non renseigné', player_lastname: str = 'non renseigné',
+    #              player_birthday: datetime.date = no_date, player_gender: str = '',
+    #              player_ranking: int = -1, _player_score: float = 0):
+    def __init__(self, player_firstname: str = f.first_name(), player_lastname: str = f.last_name(),
+                 player_birthday: datetime.date = f.date(), player_gender: str = '',
+                 player_ranking: int = int(Faker().numerify(text="#%")), _player_score: float = 0):
         self.player_firstname = player_firstname
         self.player_lastname = player_lastname
         self.player_birthday = player_birthday

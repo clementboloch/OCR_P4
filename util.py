@@ -96,7 +96,7 @@ def now():
 
 # TODO: vérifier la fonction
 def ask_date(obj: object, param: str):
-    # si que des dates demandées, ^plus besoin de mettre l'argument param, qui ne sert que pour le test sur l'instance date
+    # si que des dates demandées, plus besoin de mettre l'arg param, qui ne sert que pour le test sur l'instance date
     # if isinstance(param, datetime.date):
     day = int(input('jour'))
     mounth = int(input('mois'))

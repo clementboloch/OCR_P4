@@ -12,7 +12,8 @@ def new_tournament():
     nb_potential_players = Joueur.Table.ask_size()
     potential_players_id = list(range(1, nb_potential_players + 1))
     if nb_potential_players < nb_player:
-        print(f"Il faut un minmum de {nb_player} joueurs pour créer le tournoi. \nMerci de bien vouloir ajouter au moins {nb_player - nb_potential_players} joueurs.")
+        print(f"Il faut un minmum de {nb_player} joueurs pour créer le tournoi.\
+              \nMerci de bien vouloir ajouter au moins {nb_player - nb_potential_players} joueurs.")
         return False
     Tournament = create_instance(Tournoi)
     print(f"Ajouter les {nb_player} joueurs pour ce tournoi")
@@ -131,9 +132,11 @@ while True:
             sort_type = validate_int("1 - Par classement \n2 - Par ordre alphabétique \n", 1, 2)
             players = tournament.list_players()
             if sort_type == 1:
-                sorted_players = sorted(players, key=attrgetter('player_ranking', 'player_lastname', 'player_firstname'))
+                sorted_players = sorted(players, key=attrgetter('player_ranking', 'player_lastname',
+                                                                'player_firstname'))
             else:
-                sorted_players = sorted(players, key=attrgetter('player_lastname', 'player_firstname', 'player_ranking'))
+                sorted_players = sorted(players, key=attrgetter('player_lastname', 'player_firstname',
+                                                                'player_ranking'))
             for index, player in enumerate(sorted_players):
                 print(f"{index + 1} - {player} (classement : {player.player_ranking})")
         elif answer == 7:
