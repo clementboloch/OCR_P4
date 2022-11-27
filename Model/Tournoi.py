@@ -52,14 +52,9 @@ class Tournoi:
     def add_round(self, round: Ronde):
         serializedRound = serialize_object(round)
         self.tournament_rounds.append(serializedRound)
-        return self
 
     def add_player(self, player_id: int):
-        if player_id in self.tournament_players:
-            return False
-        else:
-            self.tournament_players.append(player_id)
-            return True
+        self.tournament_players.append(player_id)
 
     def list_players(self):
         return [Joueur.import_player_from_id(player_id) for player_id in self.tournament_players]

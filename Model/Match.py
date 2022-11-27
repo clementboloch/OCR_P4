@@ -10,3 +10,7 @@ class Match:
 
     def get_match(self):
         return ([self.player_index_1, self.score1], [self.player_index_2, self.score2])
+
+
+if __name__ == "__main__":
+    pass
