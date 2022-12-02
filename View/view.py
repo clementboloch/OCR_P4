@@ -44,13 +44,24 @@ def new_tournament():
 def make_rounds(Tournament: Tournoi, players: list[Joueur]):
     pairs, played_pairs = suisse_first(players)
     print('Voilà les paires : ', pairs)
-    for i in range(Tournament.tournament_nb_round):
-        Round = Ronde(str(i + 1), [])
+    for i in range(Tournament.tournament_nb_round - 1):
+        Round = Ronde(str(i + 1))
         Round.ask_score(pairs)
         Round.end_round()
         Tournament.add_round(Round)
-        pairs, played_pairs = suisse_then(players, played_pairs)
-        print('Voilà les paires : ', pairs)
+        then = suisse_then(players, played_pairs)
+        if then is False:
+            print("\nNous n'avons pas pu attribuer les paires selon l'algorithme suisse.\
+                   \nNous avons donc mis fin au tournoi.")
+            break
+        else:
+            pairs, played_pairs = then
+            print('Voilà les paires : ', pairs)
+            if i == Tournament.tournament_nb_round - 2:
+                Round = Ronde(str(i + 2))
+                Round.ask_score(pairs)
+                Round.end_round()
+                Tournament.add_round(Round)
 
 
 def display_results(players: list[Joueur]):
