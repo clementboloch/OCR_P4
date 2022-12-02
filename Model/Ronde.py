@@ -7,11 +7,11 @@ from Controler.project_const import no_datetime
 
 
 class Ronde:
-    def __init__(self, name: str, matchs: list, start: datetime = no_datetime, end: datetime = no_datetime):
+    def __init__(self, name: str, matchs: list = [], start: datetime = no_datetime, end: datetime = no_datetime):
         self.name = f"Round {name}" if name.isdigit() else name
+        self.matchs = matchs if matchs != [] else []
         self.start = now() if start == no_datetime else start
         self.end = now() if end == no_datetime else end
-        self.matchs = matchs
 
     def __str__(self):
         return self.name

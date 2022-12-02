@@ -41,8 +41,8 @@ class Tournoi:
         self.tournament_start_date = tournament_start_date
         self.tournament_end_date = tournament_end_date
         self.tournament_nb_round = tournament_nb_round
-        self.tournament_rounds = tournament_rounds
-        self.tournament_players = tournament_players
+        self.tournament_rounds = tournament_rounds if tournament_rounds != [] else []
+        self.tournament_players = tournament_players if tournament_players != [] else []
         self.tournament_time_control = tournament_time_control
         self.tournament_description = tournament_description
 
