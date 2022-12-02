@@ -103,4 +103,4 @@ def now():
 
 
 if __name__ == "__main__":
-    validate_value("test de text", [0, 0.5, 1])
+    pass

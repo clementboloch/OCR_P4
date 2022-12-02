@@ -53,32 +53,5 @@ def suisse_then(players: list[Joueur], played_pairs: list):
         return False
 
 
-# if __name__ == "__main__":
-#     import random
-#     from Joueur import no_date
-
-
-#     def result(round):
-#         for pair in round:
-#             score = random.randint(0, 2) / 2
-#             print(score)
-#             pair[0]._player_score += score
-#             pair[1]._player_score += 1 - score
-
-#     joueur1 = Joueur('1', 'A', no_date, 'M', 1)
-#     joueur2 = Joueur('2', 'Z', no_date, 'M', 2)
-#     joueur3 = Joueur('3', 'E', no_date, 'M', 3)
-#     joueur4 = Joueur('4', 'R', no_date, 'M', 4)
-#     joueur5 = Joueur('5', 'T', no_date, 'M', 5)
-#     joueur6 = Joueur('6', 'Y', no_date, 'M', 6)
-#     joueur7 = Joueur('7', 'U', no_date, 'M', 7)
-#     joueur8 = Joueur('8', 'I', no_date, 'M', 8)
-
-#     joueurs = [joueur1, joueur2, joueur3, joueur4, joueur5, joueur6, joueur7, joueur8]
-
-#     round, played_pairs = suisse_first(joueurs)
-#     print(round)
-#     for i in range(6):
-#         result(round)
-#         round, played_pairs = suisse_then(joueurs, played_pairs)
-#         print(round)
+if __name__ == "__main__":
+    pass

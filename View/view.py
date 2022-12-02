@@ -166,3 +166,7 @@ def menu():
         elif answer == 9:
             print('Au revoir !')
             break
+
+
+if __name__ == "__main__":
+    pass

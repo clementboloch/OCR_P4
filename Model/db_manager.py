@@ -33,3 +33,7 @@ class Table:
         for object in objects:
             created.append(Object(**object))
         return created
+
+
+if __name__ == "__main__":
+    pass

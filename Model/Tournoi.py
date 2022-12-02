@@ -67,8 +67,5 @@ class Tournoi:
         return [Joueur.import_player_from_id(player_id) for player_id in self.tournament_players]
 
 
-if __name__ == '__main__':
-    Tournoi1 = Tournoi('tournoi1')
-    # print(type(Tournoi1.tournament_rounds))
-    # print(Tournoi1.__dict__)
-    print(f.word())
+if __name__ == "__main__":
+    pass
