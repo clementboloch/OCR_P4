@@ -23,10 +23,6 @@ class Table:
     def update_data(self, id: int, updated: dict):
         self.table.update(updated, doc_ids=[id])
 
-    def save_all_data(self, serialized: list[dict]):
-        self.table.truncate()
-        self.table.insert_multiple(serialized)
-
     def import_all_data(self, Object):
         objects = self.table.all()
         created = []

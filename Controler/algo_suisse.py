@@ -3,10 +3,6 @@ from operator import attrgetter
 from Model.Joueur import Joueur
 
 
-def visible(players: list[Joueur]):
-    return [player.player_ranking for player in players]
-
-
 def sort_score(players: list[Joueur]):
     return sorted(players, key=attrgetter('_player_score'), reverse=True)
 

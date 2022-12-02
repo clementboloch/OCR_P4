@@ -26,10 +26,6 @@ def serialize_object(object: object):
     return object.__dict__
 
 
-def serialize(created: list[object]):
-    return [object.__dict__ for object in created]
-
-
 def confirmation(type):
     if type == print:
         return 0

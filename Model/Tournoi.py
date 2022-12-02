@@ -11,7 +11,6 @@ import View.view_text as view_text
 f = Faker(locale="fr_FR")
 
 today = date.today()
-no_date = date(1, 1, 1)
 
 
 class Tournoi:
