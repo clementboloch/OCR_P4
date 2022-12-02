@@ -8,6 +8,7 @@ pas_interval = "Ceci n'est pas un nombre entier compris entre {} et {}."
 pas_defaut = "La valeur doit être {} ou {}"
 valeure_actuelle = "Valeure actuelle : {}\nPour concerver la valeure actuelle saisir 'oui' "\
                    "ou appuyer sur la touche 'entrer', sinon saisir la valeure désirée\n"
+instance_cree = "{} a bien été sauvegardé dans la base de données."
 
 sc_player_firstname = "\nPrénom \n"
 sc_player_lastname = "\nNom de famille \n"

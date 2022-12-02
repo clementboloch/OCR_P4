@@ -7,7 +7,7 @@ def create_instance(obj):
     Instance = obj()
     for param in Instance.step:
         ask(Instance, param)
-    print(Instance.__dict__)
+    print(view_text.instance_cree.format(Instance))
     return Instance
 
 
