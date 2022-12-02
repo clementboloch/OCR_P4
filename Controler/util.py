@@ -10,10 +10,12 @@ def create_instance(obj):
 
 
 def input_date(text: str):
-    print(text)
-    day = int(input('jour'))
-    mounth = int(input('mois'))
-    year = int(input('année'))
+    inp = input(text)
+    if inp in ['', 'y']:
+        return inp
+    day = validate_int('Jour : ', 1, 31)
+    mounth = validate_int('Mois : ', 1, 12)
+    year = validate_int('Année : ', 1900, 2100)
     new_date = date(year, mounth, day)
     return new_date
 
@@ -98,18 +100,6 @@ def ask(obj, param: str):
 
 def now():
     return datetime.now()
-
-
-# TODO: vérifier la fonction
-def ask_date(obj: object, param: str):
-    # si que des dates demandées, plus besoin de mettre l'arg param, qui ne sert que pour le test sur l'instance date
-    # if isinstance(param, datetime.date):
-    day = int(input('jour'))
-    mounth = int(input('mois'))
-    year = int(input('année'))
-    new_date = date(year, mounth, day)
-    obj.__dict__[param] = new_date
-# to use it : ask_date(tournament, 'start_date')
 
 
 if __name__ == "__main__":

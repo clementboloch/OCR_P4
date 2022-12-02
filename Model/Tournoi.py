@@ -19,8 +19,14 @@ class Tournoi:
     scenario = {
         'tournament_name': [{'type': input, 'text': "\n\nVeuillez saisir le nom de l'événement : \n"}],
         'tournament_location': [{'type': input, 'text': "\n\nlocalisation : \n"}],
-        'tournament_start_date': [{'type': input_date, 'text': "\n\nstart date : \n"}],
-        'tournament_end_date': [{'type': input_date, 'text': "\n\nend date : \n"}],
+        'tournament_start_date': [{
+            'type': print,
+            'text': '\n\nLa date de début du tournoi est définie à la date du jour.\n'
+        }],
+        'tournament_end_date': [{
+            'type': input_date,
+            'text': '\n\n\nPour avoir la date du jour comme date de fin du tournoi saisir "y" ou "entrer"\n'
+        }],
         'tournament_nb_round': [{'type': input, 'text': "\n\nnb round : \n"}],
         'tournament_rounds': [{'type': input, 'text': "\n\nround : \n"}],
         'tournament_players': [{'type': input, 'text': "\n\nplayers : \n"}],
@@ -29,7 +35,8 @@ class Tournoi:
         'tournament_description': [{'type': input, 'text': "\n\ndescription : \n"}],
     }
 
-    step = ['tournament_name', 'tournament_location', 'tournament_time_control', 'tournament_description']
+    step = ['tournament_name', 'tournament_location', 'tournament_start_date', 'tournament_end_date',
+            'tournament_time_control', 'tournament_description']
 
     def __init__(self, tournament_name: str = f.word(), tournament_location: str = f.address(),
                  tournament_start_date: date = today, tournament_end_date: date = today,
@@ -65,5 +72,3 @@ if __name__ == '__main__':
     # print(type(Tournoi1.tournament_rounds))
     # print(Tournoi1.__dict__)
     print(f.word())
-
-# TODO: préciser dans la console que la date est définie automatiquement à la date du jour

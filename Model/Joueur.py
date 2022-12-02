@@ -1,11 +1,8 @@
 import datetime
 from faker import Faker
 
-# from project_const import no_date
-
+from Controler.util import input_date
 from Model.db_manager import Table
-# TODO: utiliser player_birthday -> attention, voir comment gérer la date pour l'aniversaire : texte, objet date ?
-# from util import input_date
 
 f = Faker(locale="fr_FR")
 
@@ -16,8 +13,10 @@ class Joueur:
     scenario = {
         'player_firstname': [{'type': input, 'text': "\n\nfirst name : \n"}],
         'player_lastname': [{'type': input, 'text': "\n\nlast name : \n"}],
-        # 'player_birthday': [{'type': input_date, 'text': "\n\nbirthday : \n"}],
-        'player_birthday': [{'type': input, 'text': "\n\nbirthday : \n"}],
+        'player_birthday': [{
+            'type': input_date,
+            'text': "\n\nPour concerver la date d'anniversaire par défault saisir 'y' ou 'entrer'\n"
+        }],
         'player_gender': [{'type': input, 'text': "\n\ngender : \n"}],
         'player_ranking': [{'type': input, 'text': "\n\nranking : \n"}],
     }
