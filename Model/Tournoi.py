@@ -6,6 +6,7 @@ from Controler.util import input_date, serialize_object
 from Model.Ronde import Ronde
 from Model.Joueur import Joueur
 from Controler.project_const import nb_round
+import View.view_text as view_text
 
 f = Faker(locale="fr_FR")
 
@@ -17,22 +18,14 @@ class Tournoi:
     Table = Table('app/db.json', 'tournaments_table')
 
     scenario = {
-        'tournament_name': [{'type': input, 'text': "\n\nVeuillez saisir le nom de l'événement : \n"}],
-        'tournament_location': [{'type': input, 'text': "\n\nlocalisation : \n"}],
-        'tournament_start_date': [{
-            'type': print,
-            'text': '\n\nLa date de début du tournoi est définie à la date du jour.\n'
-        }],
-        'tournament_end_date': [{
-            'type': input_date,
-            'text': '\n\n\nPour avoir la date du jour comme date de fin du tournoi saisir "y" ou "entrer"\n'
-        }],
-        'tournament_nb_round': [{'type': input, 'text': "\n\nnb round : \n"}],
-        'tournament_rounds': [{'type': input, 'text': "\n\nround : \n"}],
-        'tournament_players': [{'type': input, 'text': "\n\nplayers : \n"}],
-        'tournament_time_control': [{'type': input, 'text': "\n\ntime control : \n",
-                                    'answers': ['bullet', 'blitz', 'coup rapide']}],
-        'tournament_description': [{'type': input, 'text': "\n\ndescription : \n"}],
+        'tournament_name': [{'type': input, 'text': view_text.sc_tournament_name}],
+        'tournament_location': [{'type': input, 'text': view_text.sc_tournament_location}],
+        'tournament_start_date': [{'type': print, 'text': view_text.sc_tournament_start_date}],
+        'tournament_end_date': [{'type': input_date, 'text': view_text.sc_tournament_end_date}],
+        'tournament_nb_round': [{'type': input, 'text': view_text.sc_tournament_nb_round}],
+        'tournament_time_control': [{'type': input, 'text': view_text.sc_tournament_time_control,
+                                     'answers': view_text.rep_time_control}],
+        'tournament_description': [{'type': input, 'text': view_text.sc_tournament_description}],
     }
 
     step = ['tournament_name', 'tournament_location', 'tournament_start_date', 'tournament_end_date',

@@ -6,6 +6,7 @@ from Controler.project_const import nb_player
 from Model.Tournoi import Tournoi
 from Model.Ronde import Ronde
 from Model.Joueur import Joueur
+import View.view_text as view_text
 
 
 def new_tournament():
@@ -22,7 +23,7 @@ def new_tournament():
         for index, player_id in enumerate(potential_players_id):
             player = Joueur.import_player_from_id(player_id)
             print(f"{index + 1} - {player}")
-        index = validate_int('num joueur : ', 1, len(potential_players_id))
+        index = validate_int('Numéro du joueur : ', 1, len(potential_players_id))
         id = potential_players_id.pop(index - 1)
         Tournament.add_player(id)
 
@@ -31,7 +32,6 @@ def new_tournament():
             print(f'{playerAdded} a bien été ajoutée au tournoi \n')
         else:
             print(f'{playerAdded} a bien été ajouté au tournoi \n')
-    print(Tournament.__dict__)
 
     players = Tournament.list_players()
     make_rounds(Tournament, players)
@@ -79,16 +79,7 @@ def update_ranks(Tournament: Tournoi):
 
 
 def menu():
-    menu = '''\nQue voulez vous faire ? \n
-        1 - Créer un tournoi\n
-        2 - Ajouter un joueur\n
-        3 - Changer le classement d'un joueur\n
-        4 - Liste de tous les joueurs\n
-        5 - Liste des tournois\n
-        6 - Liste des joueurs d'un tournoi\n
-        7 - Liste des tours d'un tournoi\n
-        8 - Liste des matchs d'un tournoi\n
-        9 - Quitter le porgramme\n'''
+    menu = view_text.menu
 
     while True:
         answer = validate_int(menu, 1, 9)

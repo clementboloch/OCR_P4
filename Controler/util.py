@@ -1,5 +1,7 @@
 from datetime import date, datetime
 
+import View.view_text as view_text
+
 
 def create_instance(obj):
     Instance = obj()
@@ -33,13 +35,13 @@ def confirmation(type):
         return 0
     repeat = 1
     while repeat:
-        inp = input('\n Confirmez-vous votre saisie ? \n"y" ou "entrer" pour confirmer, "n" pour modifier \n')
-        if inp in ['y', '']:
+        inp = input(view_text.confirmer_saisie)
+        if inp in view_text.rep_confirmation:
             return 0
-        elif inp == 'n':
+        elif inp in view_text.rep_annulation:
             return 1
         else:
-            print("\nJe n'ai pas compris, merci de recommencer.")
+            print(view_text.saisie_incorrecte)
 
 
 def validate_int(text: str, min: int, max=-1):
@@ -47,7 +49,7 @@ def validate_int(text: str, min: int, max=-1):
     condition = False
     while condition is False:
         if not answer.isdigit():
-            print("Ceci n'est pas un nombre entier")
+            print(view_text.pas_entier)
             answer = input(text)
             continue
         if max in [-1, "l'infini"]:
@@ -56,7 +58,7 @@ def validate_int(text: str, min: int, max=-1):
         else:
             max_condition = float(answer) > float(max)
         if (float(answer) < min or max_condition):
-            print(f"Ceci n'est pas un nombre entier compris entre {min} et {max}")
+            print(view_text.pas_interval.format(min, max))
             answer = input(text)
             continue
         else:
@@ -70,7 +72,7 @@ def validate_value(text: str, values: list):
     last_str_value = first_str_values.pop()
     answer = input(text)
     while answer not in str_values:
-        print(f"La valeur doit être {', '.join(first_str_values)} ou {last_str_value}")
+        print(view_text.pas_defaut.format(', '.join(first_str_values), last_str_value))
         answer = input(text)
     return float(answer)
 
@@ -92,7 +94,7 @@ def ask(obj, param: str):
                 inp = validate_int("", 1, len(answers))
                 inp = answers[inp - 1]
             else:
-                inp = type(txt + 'present value: ' + str(obj.__dict__[param]) + '\n')
+                inp = type(txt + view_text.valeure_actuelle.format(str(obj.__dict__[param])))
             if type != print and inp != '':
                 obj.__dict__[param] = inp
             conf = confirmation(type)

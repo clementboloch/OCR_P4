@@ -3,6 +3,7 @@ from faker import Faker
 
 from Controler.util import input_date
 from Model.db_manager import Table
+import View.view_text as view_text
 
 f = Faker(locale="fr_FR")
 
@@ -11,14 +12,11 @@ class Joueur:
     Table = Table('app/db.json', 'players_table')
 
     scenario = {
-        'player_firstname': [{'type': input, 'text': "\n\nfirst name : \n"}],
-        'player_lastname': [{'type': input, 'text': "\n\nlast name : \n"}],
-        'player_birthday': [{
-            'type': input_date,
-            'text': "\n\nPour concerver la date d'anniversaire par défault saisir 'y' ou 'entrer'\n"
-        }],
-        'player_gender': [{'type': input, 'text': "\n\ngender : \n"}],
-        'player_ranking': [{'type': input, 'text': "\n\nranking : \n"}],
+        'player_firstname': [{'type': input, 'text': view_text.sc_player_firstname}],
+        'player_lastname': [{'type': input, 'text': view_text.sc_player_lastname}],
+        'player_birthday': [{'type': input_date, 'text': view_text.sc_player_birthday}],
+        'player_gender': [{'type': input, 'text': view_text.sc_player_gender}],
+        'player_ranking': [{'type': input, 'text': view_text.sc_player_ranking}],
     }
 
     step = ['player_firstname', 'player_lastname', 'player_birthday', 'player_gender', 'player_ranking']

@@ -4,11 +4,12 @@ from Model.Match import Match
 from Model.Joueur import Joueur
 from Controler.util import validate_value, now
 from Controler.project_const import no_datetime
+import View.view_text as view_text
 
 
 class Ronde:
     def __init__(self, name: str, matchs: list = [], start: datetime = no_datetime, end: datetime = no_datetime):
-        self.name = f"Round {name}" if name.isdigit() else name
+        self.name = view_text.nom_ronde.format(name) if name.isdigit() else name
         self.matchs = matchs if matchs != [] else []
         self.start = now() if start == no_datetime else start
         self.end = now() if end == no_datetime else end
@@ -24,7 +25,7 @@ class Ronde:
 
     def ask_score(self, pairs: list[list[Joueur]]):
         for pair in pairs:
-            score = validate_value('score de ' + str(pair[0]) + ' : ', [0, 0.5, 1])
+            score = validate_value(view_text.score_ronde.format(str(pair[0])), [0, 0.5, 1])
             pair[0]._player_score += score
             pair[1]._player_score += 1 - score
             match = Match(pair, score)
