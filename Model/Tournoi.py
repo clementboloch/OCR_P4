@@ -14,7 +14,7 @@ today = date.today()
 
 
 class Tournoi:
-    Table = Table('app/db.json', 'tournaments_table')
+    Table = Table('db.json', 'tournaments_table')
 
     scenario = {
         'tournament_name': [{'type': input, 'text': view_text.sc_tournament_name}],

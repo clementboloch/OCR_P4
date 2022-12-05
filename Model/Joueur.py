@@ -9,7 +9,7 @@ f = Faker(locale="fr_FR")
 
 
 class Joueur:
-    Table = Table('app/db.json', 'players_table')
+    Table = Table('db.json', 'players_table')
 
     scenario = {
         'player_firstname': [{'type': input, 'text': view_text.sc_player_firstname}],

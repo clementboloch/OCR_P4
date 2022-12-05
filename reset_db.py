@@ -1,6 +1,6 @@
 from tinydb import TinyDB
 
-db = TinyDB('app/db.json', indent=4, default=str)
+db = TinyDB('db.json', indent=4, default=str)
 table = db.table('players_table')
 table.truncate()
 
