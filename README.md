@@ -31,13 +31,13 @@ Then, you can install the python dependencies for the project:
 ## Launch the program
 
 From the root directory launch the program:
-`python ./app/main.py`
+`python ./main.py`
 
 
 ## Flake8 report 
 
 From the root directory generate a new Flake8 report:
-`flake8 ./app --format=html --htmldir=flake8_rapport`
+`flake8 ./ --format=html --htmldir=flake8_rapport`
 
 You can generate fake data (1 fake tournament and 1 fake player) with the file `fake_data.py`
 You can empty the data base with the file `reset_db.py`
