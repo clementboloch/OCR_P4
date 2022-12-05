@@ -37,7 +37,7 @@ From the root directory launch the program:
 ## Flake8 report 
 
 From the root directory generate a new Flake8 report:
-`flake8 ./app --format=html --htmldir=flake-report`
+`flake8 ./app --format=html --htmldir=flake8_rapport`
 
 You can generate fake data (1 fake tournament and 1 fake player) with the file `fake_data.py`
 You can empty the data base with the file `reset_db.py`
