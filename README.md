@@ -24,19 +24,19 @@ Set a virtual environment before installing the dependencies:
 To activate your virtual environment:
 `source env/bin/activate`
 
-Then, from the OPC_P4 directory, you can install the python dependencies for the project: 
+Then, from the OCR_P4 directory, you can install the python dependencies for the project: 
 `pip install -r requirements.txt`
 
 
 ## Launch the program
 
-From the OPC_P4 directory launch the program:
+From the OCR_P4 directory launch the program:
 `python ./main.py`
 
 
 ## Flake8 report 
 
-From the OPC_P4 directory generate a new Flake8 report:
+From the OCR_P4 directory generate a new Flake8 report:
 `flake8 ./ --format=html --htmldir=flake8_rapport`
 
 You can generate fake data (1 fake tournament and 1 fake player) with the file `fake_data.py`
