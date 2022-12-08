@@ -20,8 +20,8 @@ class Table:
         Obj = Object(**data)
         return Obj
 
-    def update_data(self, id: int, updated: dict):
-        self.table.update(updated, doc_ids=[id])
+    def update_data(self, updated: dict):
+        self.table.update(updated, doc_ids=[updated['id']])
 
     def import_all_data(self, Object):
         objects = self.table.all()

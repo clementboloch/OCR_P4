@@ -30,11 +30,12 @@ class Tournoi:
     step = ['tournament_name', 'tournament_location', 'tournament_start_date', 'tournament_end_date',
             'tournament_time_control', 'tournament_description']
 
-    def __init__(self, tournament_name: str = f.word(), tournament_location: str = f.address(),
+    def __init__(self, id: int = -1, tournament_name: str = f.word(), tournament_location: str = f.address(),
                  tournament_start_date: date = today, tournament_end_date: date = today,
                  tournament_nb_round: int = nb_round, tournament_rounds: list[dict] = [],
                  tournament_players: list[int] = [], tournament_time_control: str = 'non renseigné',
                  tournament_description: str = 'non renseignée'):
+        self.id = Tournoi.Table.ask_size() + 1 if id == -1 else id
         self.tournament_name = tournament_name
         self.tournament_location = tournament_location
         self.tournament_start_date = tournament_start_date

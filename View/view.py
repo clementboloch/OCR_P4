@@ -17,8 +17,10 @@ def new_tournament():
               \nMerci de bien vouloir ajouter au moins {nb_player - nb_potential_players} joueurs.")
         return False
     Tournament = create_instance(Tournoi)
+    serializedNewTournament = serialize_object(Tournament)
+    Tournoi.Table.save_data(serializedNewTournament)
     print(f"Ajouter les {nb_player} joueurs pour ce tournoi")
-    for _ in range(nb_player):
+    for _ in range(nb_player - len(Tournament.tournament_players)):
         print("Joueurs disponibles :")
         for index, player_id in enumerate(potential_players_id):
             player = Joueur.import_player_from_id(player_id)
@@ -75,7 +77,8 @@ def update_ranks(Tournament: Tournoi):
     for player_id in Tournament.tournament_players:
         player = Joueur.import_player_from_id(player_id)
         new_rank = validate_int(f"Nouveau classement du joueur {player} : ", 1)
-        Joueur.Table.update_data(player_id, {'player_ranking': int(new_rank)})
+        serialized_updated = player.update_rank(new_rank)
+        Joueur.Table.update_data(serialized_updated)
 
 
 def answer_1():
@@ -100,7 +103,8 @@ def answer_3():
     Player = players[index - 1]
     print(f"Ancien classement du joueur {Player} : {Player.player_ranking}")
     new_rank = input(f"Nouveau classement du joueur {Player} : ")
-    Joueur.Table.update_data(index, {'player_ranking': int(new_rank)})
+    serialized_updated = Player.update_rank(new_rank)
+    Joueur.Table.update_data(serialized_updated)
 
 
 def answer_4():
