@@ -34,6 +34,8 @@ def new_tournament():
             print(f'{playerAdded} a bien été ajoutée au tournoi \n')
         else:
             print(f'{playerAdded} a bien été ajouté au tournoi \n')
+    serializedNewTournament = serialize_object(Tournament)
+    Tournoi.Table.update_data(serializedNewTournament)
 
     players = Tournament.list_players()
     make_rounds(Tournament, players)
@@ -85,7 +87,7 @@ def answer_1():
     NewTournament = new_tournament()
     if NewTournament:
         serializedNewTournament = serialize_object(NewTournament)
-        Tournoi.Table.save_data(serializedNewTournament)
+        Tournoi.Table.update_data(serializedNewTournament)
 
 
 def answer_2():

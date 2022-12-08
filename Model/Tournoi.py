@@ -52,6 +52,8 @@ class Tournoi:
     def add_round(self, round: Ronde):
         serializedRound = serialize_object(round)
         self.tournament_rounds.append(serializedRound)
+        serializedTournament = serialize_object(self)
+        Tournoi.Table.update_data(serializedTournament)
 
     def add_player(self, player_id: int):
         self.tournament_players.append(player_id)
