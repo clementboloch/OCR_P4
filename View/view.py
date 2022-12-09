@@ -32,8 +32,12 @@ def new_tournament(PartialTournament=None):
             for index, player_id in enumerate(potential_players_id):
                 player = Joueur.import_player_from_id(player_id)
                 print(f"{index + 1} - {player}")
-            index = validate_int('Numéro du joueur : ', 1, len(potential_players_id))
-            id = potential_players_id.pop(index - 1)
+            print(f"{len(potential_players_id) + 1} - Créer un joueur (et l'ajouter)")
+            index = validate_int('Numéro du joueur : ', 1, len(potential_players_id) + 1)
+            if index == len(potential_players_id) + 1:
+                id = answer_2()
+            else:
+                id = potential_players_id.pop(index - 1)
             Tournament.add_player(id)
 
             playerAdded = Joueur.import_player_from_id(id)
@@ -129,6 +133,7 @@ def answer_2():
     NewPlayer = create_instance(Joueur)
     serializedNewPlayer = serialize_object(NewPlayer)
     Joueur.Table.save_data(serializedNewPlayer)
+    return NewPlayer.id
 
 
 def answer_3():
