@@ -96,6 +96,17 @@ def ask(obj, param: str):
             conf = confirmation(type)
 
 
+def iterate_list(lists: list[list], func):
+    return [func(list) for list in lists]
+
+
+def ask_stop():
+    print(view_text.continuer)
+    ans = validate_int("", 1, 2)
+    response = False if ans == 1 else True
+    return response
+
+
 def now():
     return datetime.now()
 

@@ -26,6 +26,14 @@ class Joueur:
     def import_player_from_id(cls, player_id):
         return cls.Table.import_data_from_id(cls, player_id)
 
+    @classmethod
+    def ids_to_players(cls, ids: list[int]):
+        return [cls.import_player_from_id(id) for id in ids]
+
+    @classmethod
+    def players_to_ids(cls, players: list):
+        return [Player.id for Player in players]
+
     # def __init__(self, player_firstname: str = 'non renseigné', player_lastname: str = 'non renseigné',
     #              player_birthday: datetime.date = no_date, player_gender: str = '',
     #              player_ranking: int = -1, _player_score: float = 0):

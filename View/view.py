@@ -1,71 +1,95 @@
 from operator import attrgetter
 
-from Controler.util import serialize_object, validate_int, create_instance
+from Controler.util import serialize_object, validate_int, create_instance, iterate_list, ask_stop
 from Controler.algo_suisse import suisse_first, suisse_then, sort
-from Controler.project_const import nb_player
+from Controler.project_const import nb_player, nb_round
 from Model.Tournoi import Tournoi
 from Model.Ronde import Ronde
 from Model.Joueur import Joueur
 import View.view_text as view_text
 
 
-def new_tournament():
+def new_tournament(PartialTournament=None):
     nb_potential_players = Joueur.Table.ask_size()
     potential_players_id = list(range(1, nb_potential_players + 1))
     if nb_potential_players < nb_player:
         print(f"Il faut un minmum de {nb_player} joueurs pour créer le tournoi.\
               \nMerci de bien vouloir ajouter au moins {nb_player - nb_potential_players} joueurs.")
         return False
-    Tournament = create_instance(Tournoi)
-    serializedNewTournament = serialize_object(Tournament)
-    Tournoi.Table.save_data(serializedNewTournament)
-    print(f"Ajouter les {nb_player} joueurs pour ce tournoi")
-    for _ in range(nb_player - len(Tournament.tournament_players)):
-        print("Joueurs disponibles :")
-        for index, player_id in enumerate(potential_players_id):
-            player = Joueur.import_player_from_id(player_id)
-            print(f"{index + 1} - {player}")
-        index = validate_int('Numéro du joueur : ', 1, len(potential_players_id))
-        id = potential_players_id.pop(index - 1)
-        Tournament.add_player(id)
+    if PartialTournament is None:
+        Tournament = create_instance(Tournoi)
+        serializedNewTournament = serialize_object(Tournament)
+        stop = Tournoi.Table.save_data(serializedNewTournament, True)
+        if stop:
+            return
+    else:
+        Tournament = PartialTournament
 
-        playerAdded = Joueur.import_player_from_id(id)
-        if playerAdded.player_gender == 'F':
-            print(f'{playerAdded} a bien été ajoutée au tournoi \n')
-        else:
-            print(f'{playerAdded} a bien été ajouté au tournoi \n')
-    serializedNewTournament = serialize_object(Tournament)
-    Tournoi.Table.update_data(serializedNewTournament)
+    if Tournament._step == 0:
+        print(f"Ajouter les {nb_player} joueurs pour ce tournoi")
+        for _ in range(nb_player - len(Tournament.tournament_players)):
+            print("Joueurs disponibles :")
+            for index, player_id in enumerate(potential_players_id):
+                player = Joueur.import_player_from_id(player_id)
+                print(f"{index + 1} - {player}")
+            index = validate_int('Numéro du joueur : ', 1, len(potential_players_id))
+            id = potential_players_id.pop(index - 1)
+            Tournament.add_player(id)
+
+            playerAdded = Joueur.import_player_from_id(id)
+            if playerAdded.player_gender == 'F':
+                print(f'{playerAdded} a bien été ajoutée au tournoi \n')
+            else:
+                print(f'{playerAdded} a bien été ajouté au tournoi \n')
+        Tournament._step = 1
+        serializedNewTournament = serialize_object(Tournament)
+        stop = Tournoi.Table.update_data(serializedNewTournament, True)
+        if stop:
+            return
 
     players = Tournament.list_players()
-    make_rounds(Tournament, players)
-    display_results(players)
-    update_ranks(Tournament)
+    if Tournament._step <= 1:
+        make_rounds(Tournament, players)
+        Tournament._step = 2
+    if Tournament._step <= 2:
+        display_results(players)
+        Tournament._step = 3
+        if ask_stop():
+            return
+    if Tournament._step <= 3:
+        update_ranks(Tournament)
+        Tournament._step = 4
 
     return Tournament
 
 
 def make_rounds(Tournament: Tournoi, players: list[Joueur]):
-    pairs, played_pairs = suisse_first(players)
-    print('Voilà les paires : ', pairs)
-    for i in range(Tournament.tournament_nb_round - 1):
-        Round = Ronde(str(i + 1))
-        Round.ask_score(pairs)
-        Round.end_round()
-        Tournament.add_round(Round)
-        then = suisse_then(players, played_pairs)
+    if Tournament.tournament_nb_round == 0:
+        Tournament._pairs, Tournament._played_pairs = suisse_first(players)
+    print('Voilà les paires : ', iterate_list(Tournament._pairs, Joueur.ids_to_players))
+    while Tournament.tournament_nb_round <= nb_round - 2:
+        Round = Ronde(str(Tournament.tournament_nb_round + 1))
+        then = suisse_then(players, Tournament._played_pairs)
         if then is False:
+            Round.ask_score(Tournament._pairs)
+            Round.end_round()
+            Tournament.add_round(Round)
             print("\nNous n'avons pas pu attribuer les paires selon l'algorithme suisse.\
                    \nNous avons donc mis fin au tournoi.")
             break
         else:
-            pairs, played_pairs = then
-            print('Voilà les paires : ', pairs)
-            if i == Tournament.tournament_nb_round - 2:
-                Round = Ronde(str(i + 2))
-                Round.ask_score(pairs)
-                Round.end_round()
-                Tournament.add_round(Round)
+            Round.ask_score(iterate_list(Tournament._pairs, Joueur.ids_to_players))
+            Round.end_round()
+            Tournament._pairs, Tournament._played_pairs = then
+            Tournament.add_round(Round)
+            if ask_stop():
+                return
+            print('Voilà les paires : ', iterate_list(Tournament._pairs, Joueur.ids_to_players))
+    if Tournament.tournament_nb_round == nb_round - 1:
+        Round = Ronde(str(Tournament.tournament_nb_round + 1))
+        Round.ask_score(iterate_list(Tournament._pairs, Joueur.ids_to_players))
+        Round.end_round()
+        Tournament.add_round(Round)
 
 
 def display_results(players: list[Joueur]):
@@ -84,7 +108,18 @@ def update_ranks(Tournament: Tournoi):
 
 
 def answer_1():
-    NewTournament = new_tournament()
+    answer = validate_int(view_text.create_tournament, 1, 2)
+    if answer == 1:
+        Tournament = None
+    else:
+        tournaments = Tournoi.Table.import_all_data(Tournoi)
+        tournaments = [Tournoi for Tournoi in tournaments if Tournoi._step < 4]
+        print("Quel tournoi voulez-vous reprendre ?")
+        for index, Tournament in enumerate(tournaments):
+            print(f"{index + 1} - {Tournament}")
+        index = validate_int("", 1, len(tournaments))
+        Tournament = tournaments[index - 1]
+    NewTournament = new_tournament(Tournament)
     if NewTournament:
         serializedNewTournament = serialize_object(NewTournament)
         Tournoi.Table.update_data(serializedNewTournament)

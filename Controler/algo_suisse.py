@@ -1,6 +1,7 @@
 from operator import attrgetter
 
 from Model.Joueur import Joueur
+from Controler.util import iterate_list
 
 
 def sort_score(players: list[Joueur]):
@@ -22,10 +23,11 @@ def suisse_first(players: list[Joueur]):
     sorted_list = sort(players)
     first_pairs = [sort_rank([sorted_list[i], sorted_list[int(nb_players/2) + i]]) for i in range(int(nb_players / 2))]
     played_pairs = first_pairs.copy()
-    return first_pairs, played_pairs
+    return iterate_list(first_pairs, Joueur.players_to_ids), iterate_list(played_pairs, Joueur.players_to_ids)
 
 
 def suisse_then(players: list[Joueur], played_pairs: list):
+    played_pairs = iterate_list(played_pairs, Joueur.ids_to_players)
     nb_players = len(players)
     sorted_list = sort(players)
     pairs = []
@@ -44,7 +46,7 @@ def suisse_then(players: list[Joueur], played_pairs: list):
                     competitor_found = True
                 j += 1
         played_pairs.extend(pairs)
-        return pairs, played_pairs
+        return iterate_list(pairs, Joueur.players_to_ids), iterate_list(played_pairs, Joueur.players_to_ids)
     except Exception:
         return False
 

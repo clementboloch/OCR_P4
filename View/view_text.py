@@ -9,6 +9,7 @@ pas_defaut = "La valeur doit être {} ou {}"
 valeure_actuelle = "Valeure actuelle : {}\nPour concerver la valeure actuelle saisir 'oui' "\
                    "ou appuyer sur la touche 'entrer', sinon saisir la valeure désirée\n"
 instance_cree = "{} a bien été sauvegardé dans la base de données."
+continuer = "\nVoulez-vous continuer ou reprendre plus tard ?\n1 - Continuer \n2 - Reprendre plus tard"
 
 sc_player_firstname = "\nPrénom \n"
 sc_player_lastname = "\nNom de famille \n"
@@ -31,7 +32,7 @@ rep_time_control = ['bullet', 'blitz', 'coup rapide']
 sc_tournament_description = "\nDescription (optionnel) \n"
 
 menu = "\nQue voulez vous faire ? \n"\
-       "1 - Créer un tournoi\n"\
+       "1 - Créer ou finaliser un tournoi\n"\
        "2 - Ajouter un joueur\n"\
        "3 - Changer le classement d'un joueur\n"\
        "4 - Liste de tous les joueurs\n"\
@@ -40,3 +41,7 @@ menu = "\nQue voulez vous faire ? \n"\
        "7 - Liste des tours d'un tournoi\n"\
        "8 - Liste des matchs d'un tournoi\n"\
        "9 - Quitter le porgramme\n\n"
+
+create_tournament = "\nQue voulez vous faire ? \n"\
+                    "1 - Créer un nouveau tournoi\n"\
+                    "2 - Finaliser un tournoi\n"
