@@ -53,7 +53,8 @@ def new_tournament(PartialTournament=None):
 
     players = Tournament.list_players()
     if Tournament._step <= 1:
-        make_rounds(Tournament, players)
+        if not make_rounds(Tournament, players):
+            return
         Tournament._step = 2
     if Tournament._step <= 2:
         display_results(players)
@@ -87,13 +88,14 @@ def make_rounds(Tournament: Tournoi, players: list[Joueur]):
             Tournament._pairs, Tournament._played_pairs = then
             Tournament.add_round(Round)
             if ask_stop():
-                return
+                return False
             print('Voilà les paires : ', iterate_list(Tournament._pairs, Joueur.ids_to_players))
     if Tournament.tournament_nb_round == nb_round - 1:
         Round = Ronde(str(Tournament.tournament_nb_round + 1))
         Round.ask_score(iterate_list(Tournament._pairs, Joueur.ids_to_players))
         Round.end_round()
         Tournament.add_round(Round)
+    return True
 
 
 def display_results(players: list[Joueur]):
