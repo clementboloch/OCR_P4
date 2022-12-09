@@ -12,10 +12,6 @@ import View.view_text as view_text
 def new_tournament(PartialTournament=None):
     nb_potential_players = Joueur.Table.ask_size()
     potential_players_id = list(range(1, nb_potential_players + 1))
-    if nb_potential_players < nb_player:
-        print(f"Il faut un minmum de {nb_player} joueurs pour créer le tournoi.\
-              \nMerci de bien vouloir ajouter au moins {nb_player - nb_potential_players} joueurs.")
-        return False
     if PartialTournament is None:
         Tournament = create_instance(Tournoi)
         serializedNewTournament = serialize_object(Tournament)
@@ -33,7 +29,7 @@ def new_tournament(PartialTournament=None):
                 player = Joueur.import_player_from_id(player_id)
                 print(f"{index + 1} - {player}")
             print(f"{len(potential_players_id) + 1} - Créer un joueur (et l'ajouter)")
-            index = validate_int('Numéro du joueur : ', 1, len(potential_players_id) + 1)
+            index = validate_int('Choix : ', 1, len(potential_players_id) + 1)
             if index == len(potential_players_id) + 1:
                 id = answer_2()
             else:
@@ -114,17 +110,23 @@ def update_ranks(Tournament: Tournoi):
 
 
 def answer_1():
-    answer = validate_int(view_text.create_tournament, 1, 2)
-    if answer == 1:
-        Tournament = None
+    tournaments = Tournoi.Table.import_all_data(Tournoi)
+    tournaments_unfinished = [Tournoi for Tournoi in tournaments if Tournoi._step < 4]
+    nb_unfinished = len(tournaments_unfinished)
+    if nb_unfinished != 0:
+        answer = validate_int(view_text.create_tournament, 1, 2)
+        if answer == 1:
+            Tournament = None
+        else:
+            tournaments = Tournoi.Table.import_all_data(Tournoi)
+            tournaments = [Tournoi for Tournoi in tournaments if Tournoi._step < 4]
+            print("Quel tournoi voulez-vous reprendre ?")
+            for index, Tournament in enumerate(tournaments):
+                print(f"{index + 1} - {Tournament}")
+            index = validate_int("", 1, len(tournaments))
+            Tournament = tournaments[index - 1]
     else:
-        tournaments = Tournoi.Table.import_all_data(Tournoi)
-        tournaments = [Tournoi for Tournoi in tournaments if Tournoi._step < 4]
-        print("Quel tournoi voulez-vous reprendre ?")
-        for index, Tournament in enumerate(tournaments):
-            print(f"{index + 1} - {Tournament}")
-        index = validate_int("", 1, len(tournaments))
-        Tournament = tournaments[index - 1]
+        Tournament = None
     NewTournament = new_tournament(Tournament)
     if NewTournament:
         serializedNewTournament = serialize_object(NewTournament)
